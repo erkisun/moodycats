@@ -116,8 +116,8 @@ WICHTIG: Was Contract 1 NICHT kann
 
 
 Die 5 Gründe, warum Automatisierung hier schadet
-1. Komplexität explodiert
-   Mein Contract müsste plötzlich SOL empfangen und verwalten – das bedeutet, ich brauche einen Treasury-PDA, der SOL hält.
+👉 Komplexität explodiert.
+1. Mein Contract müsste plötzlich SOL empfangen und verwalten – das bedeutet, ich brauche einen Treasury-PDA, der SOL hält.
    Ich brauche einen Oracle (oder einen festen Kurs), um den aktuellen Preis zu kennen.
    Ich brauche Raydium-CPI mit Dutzenden von Accounts.
    Ich brauche Fehlerbehandlung: Was, wenn der Raydium-Call fehlschlägt? Kriegt der Investor dann trotzdem seine Tokens? Oder wird die ganze Transaktion rückgängig gemacht?
