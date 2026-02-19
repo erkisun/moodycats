@@ -35,7 +35,7 @@
 // 4. TREASURY VESTING: 3.500 Mio (70%)
 //    - Eigenständiger Contract 3
 //    - 7 Jahre linear, 500 Mio pro Jahr an Nutzer (Neuregistration, Airdrops, app-per-pay-use 1 API Call)
-//    - Ausschüttung der restlichen Token an alle (Nutzer und Investoren) bei weniger als 500 Mio neue Nutzer pro Jahr
+//    - Ausschüttung aller restlichen Token an alle (egal ob Nutzer und Investor) falls pro Jahr weniger als 500 Mio Neu-Registrationen
 //    - Für spätere LP-Erhöhungen oder App-Subventionen
 //
 // -----------------------------------------------

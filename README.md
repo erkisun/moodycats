@@ -7,7 +7,8 @@ Whitepaper : https://moodycats.io/faq/Whitepaper
 -----------------------------------------------
 Contract 1 : anchor new investor-dex-vesting    
 Contract 2 : anchor new app-per-pay-use         
-Contract 3 : anchor new treasury-vesting        
+Contract 3 : anchor new treasury-vesting    
+    
 Alle Contracts nutzen GLEICHEN Token Mint!
 
 -----------------------------------------------
