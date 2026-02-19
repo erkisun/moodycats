@@ -116,6 +116,8 @@ WICHTIG: Was Contract 1 NICHT kann
 
 
 Die 5 Gründe, warum Automatisierung hier schadet
+
+
 👉 Komplexität explodiert.
 1. Mein Contract müsste plötzlich SOL empfangen und verwalten – das bedeutet, ich brauche einen Treasury-PDA, der SOL hält.
    Ich brauche einen Oracle (oder einen festen Kurs), um den aktuellen Preis zu kennen.
