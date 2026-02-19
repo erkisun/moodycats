@@ -6,10 +6,10 @@ Contract 1
 -----------------------------------------------
 Whitepaper : https://moodycats.io/faq/Whitepaper
 
-Contract 1 : anchor new investor-dex-vesting    ─┐
-Contract 2 : anchor new app-per-pay-use         ─┼► Alle nutzen GLEICHEN Token Mint!
-Contract 3 : anchor new treasury-vesting        ─┘
-
+Contract 1 : anchor new investor-dex-vesting    
+Contract 2 : anchor new app-per-pay-use         
+Contract 3 : anchor new treasury-vesting        
+Alle Contracts nutzen GLEICHEN Token Mint!
 -----------------------------------------------
 MOODYCATS TOKENOMICS
 
@@ -37,3 +37,4 @@ TOTAL SUPPLY: 5,000,000,000 Token (5 Mia)
     - 7 Jahre linear, 500 Mio pro Jahr an Nutzer (Neuregistration, Airdrops, app-per-pay-use 1 API Call)
     - Ausschüttung aller restlichen Token an alle (egal ob Nutzer und Investor) falls pro Jahr weniger als 500 Mio Neu-Registrationen
     - Für spätere LP-Erhöhungen oder App-Subventionen
+-----------------------------------------------
