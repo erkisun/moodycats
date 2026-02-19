@@ -1,7 +1,5 @@
 -----------------------------------------------
 moodycats.com / moodycats.io
-programs/investor-dex-vesting/lib.rs
-Contract 1
 
 -----------------------------------------------
 Whitepaper : https://moodycats.io/faq/Whitepaper
@@ -39,4 +37,5 @@ TOTAL SUPPLY: 5,000,000,000 Token (5 Mia)
     - 7 Jahre linear, 500 Mio pro Jahr an Nutzer (Neuregistration, Airdrops, app-per-pay-use 1 API Call)
     - Ausschüttung aller restlichen Token an alle (egal ob Nutzer und Investor) falls pro Jahr weniger als 500 Mio Neu-Registrationen
     - Für spätere LP-Erhöhungen oder App-Subventionen
+
 -----------------------------------------------
