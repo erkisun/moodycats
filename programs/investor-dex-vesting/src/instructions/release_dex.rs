@@ -27,6 +27,27 @@
 // - Maximale Anzahl begrenzt
 //
 // -----------------------------------------------
+// WER: Admin
+// WANN: max 4x, 30d Abstand
+// 
+// PRÜFUNGEN (6):
+// 1. admin == config.admin
+// 2. released_tranches < 4
+// 3. last_release + 30d < now
+// 4. dex_vault.amount >= 100 Mio
+// 5. admin_token_account.owner == admin
+// 6. admin_token_account.mint == config.mint
+//
+// AKTIONEN (3):
+// 1. Transfer 100 Mio DEX-Vault → Admin-Token
+// 2. released_tranches++
+// 3. last_release = now
+//
+// SECURITY:
+// - Ohne Prüfung 5: Jeder könnte sein Konto angeben!
+// - Ohne Prüfung 6: Falscher Token könnte empfangen werden
+//
+// -----------------------------------------------
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Token, TokenAccount};
 use crate::states::config::Config;
@@ -42,12 +63,12 @@ pub struct ReleaseDex<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
 
-    // Globale Config (muss existieren und Admin prüfen)
+    // Globale Config (muss existieren und den Admin prüfen)
     #[account(
         mut,                                            // Hier wird das NUR das Konto verwendet, welches in initialize.rs erstellt wurde
         seeds = [b"config"],                            // PDA-Seeds: "config"
-        bump = config.bump,
-        constraint = config.admin == admin.key(),
+        bump = config.bump,                             // Bump automatisch berechnen
+        constraint = config.admin == admin.key(),       // Ist der Admin in der Config genau der gleiche wie der, der gerade signiert ?
     )]
     pub config: Account<'info, Config>,
     
@@ -55,8 +76,8 @@ pub struct ReleaseDex<'info> {
     #[account(
         mut,                                                // Hier wird das NUR das Konto verwendet, welches in initialize.rs erstellt wurde
         seeds = [b"dex_vault"],                             // PDA-Seeds: "dex_vault" = eindeutige PDA-Adresse
-        bump = config.dex_vault_bump,
-        constraint = dex_vault.key() == config.dex_vault,
+        bump = config.dex_vault_bump,                       // Bump automatisch berechnen
+        constraint = dex_vault.key() == config.dex_vault,   // Ist der Vault in der Config genau der gleiche wie der, der gerade signiert ?
     )]
     pub dex_vault: Account<'info, TokenAccount>,
 
