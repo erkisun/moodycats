@@ -46,3 +46,23 @@ pub enum VestingError {
     #[msg("PDA bump seed invalid")]
     InvalidBump,
 }
+
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Nur der Admin darf diese Aktion ausführen.")]
+    Unauthorized,
+    #[msg("Maximale Anzahl an Tranchen bereits erreicht (4/4).")]
+    MaxTranchesReached,
+    #[msg("Es müssen mindestens 30 Tage seit der letzten Freigabe vergangen sein.")]
+    ReleaseTooSoon,
+    #[msg("Nicht genügend Tokens im DEX-Vault.")]
+    InsufficientVaultBalance,
+    #[msg("Der angegebene Vault stimmt nicht mit dem in der Config überein.")]
+    InvalidVault,
+    #[msg("Das Admin-Token-Konto gehört nicht dem Admin.")]
+    InvalidTokenAccountOwner,
+    #[msg("Das Admin-Token-Konto hat den falschen Mint.")]
+    InvalidTokenAccountMint,
+    #[msg("Numerischer Überlauf.")]
+    NumericalOverflow,
+}

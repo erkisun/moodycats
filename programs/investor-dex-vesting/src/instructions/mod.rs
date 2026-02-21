@@ -13,4 +13,4 @@ pub mod release_dex;
 
 // Die Context-Typen re-exportieren, damit lib.rs sie einfach importieren kann
 pub use initialize::Initialize;
-//pub use release_dex::ReleaseDex;
+pub use release_dex::ReleaseDex;

@@ -7,6 +7,9 @@ programs/investor-dex-vesting/README.md
 CONTRACT 1: INVESTOREN-VERKAUF + DEX-VESTING
 -----------------------------------------------
 
+Contract	Zweck	Token-Menge
+Contract 1	DEX-Vesting (400 Mio) + Webseite-Verkauf (500 Mio)	900 Mio
+
 A. VORBEREITUNG (Dev / Admin)
 
 ├─► Token mit Solana CLI erstellen, Metadata hinzufügen

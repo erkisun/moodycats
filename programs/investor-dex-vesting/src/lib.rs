@@ -147,7 +147,8 @@ pub mod states;
 pub mod errors;
 
 use instructions::initialize::*;
-//use instructions::release_dex::*;
+use instructions::release_dex::*;
+//use instructions::release_investor_tokens::*;
 
 // Programm-ID aus declare_id! übernehmen
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
@@ -166,9 +167,9 @@ pub mod investor_dex_vesting {
     //    - 4 Tranchen à 100 Mio
     //    - Nur für Admin (um LP zu erhöhen)
     //    - 30 Tage Mindestabstand
-    //pub fn release_dex(ctx: Context<ReleaseDex>) -> Result<()> {
-    //    instructions::release_dex::handler(ctx)
-    //}
+    pub fn release_dex(ctx: Context<ReleaseDex>) -> Result<()> {
+        instructions::release_dex::handler(ctx)
+    }
 
     // 3. INVESTOREN-VERKAUF (für Webseiten-Käufer)
     //    - 500 Mio Tokens insgesamt
