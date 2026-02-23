@@ -37,7 +37,7 @@
 - **KEIN Vesting, KEINE Sperre** – Token sind sofort im Besitz des Investors
 - **Gesammelte SOL** landen in Admin-Wallet und werden für LP-Erhöhungen genutzt
 
-#### 3. GIFT VAULT (500 Mio) – NEU
+#### 3. GIFT VAULT (500 Mio)
 - **20% Bonus** für Investoren (aus diesem Topf)
 - **Starter-Tokens:** 7 Token pro Neuregistrierung
 - **Earlybird-Boni** für erste User/Investoren
