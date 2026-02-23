@@ -71,7 +71,7 @@
 ## CONTRACT 2: app-per-pay-use (folgt später)
 
 ### 📦 VAULTS
-- `app_vault`: 500 Mio – Pay-per-use
+- `app_vault`: 1.000 Mio – Pay-per-use
 
 ### ⚙️ LOGIK
 - **1 Token = 1 API-Call**
