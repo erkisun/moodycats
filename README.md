@@ -1,6 +1,6 @@
 # MOODYCATS – SMART CONTRACTS
-# moodycats.com / moodycats.io
-# Whitepaper : https://moodycats.io/faq/Whitepaper
+### moodycats.com / moodycats.io
+### Whitepaper : https://moodycats.io/faq/Whitepaper
 
 ## 🚀 Übersicht
 
