@@ -84,7 +84,7 @@ Config {
 //      mit: user, claimed_at = now, bump
 ```
 
-## EarlybirdBonus
+## Earlybird
 ```rust
 // Wer: Admin
 // Parameter: user, amount

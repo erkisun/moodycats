@@ -29,20 +29,21 @@
 - **DEX-Vesting:** 400 Mio Token im DEX-Vesting-Vault
 - Diese 400 Mio werden in **4 manuellen Tranchen à 100 Mio** an den Admin freigegeben
 - Admin fügt jede Tranche + gesammelte SOL manuell ins Raydium-LP hinzu
+- Aus Sicherheitsgründen (web ist unsicher, blockchain sicher) manuelle LP Erhöhung
 
 #### 2. WEBSEITE-INVESTOREN (500 Mio)
 - **Verkauf über Webseite:** 0.001 $/Token (fester Preis, teurer als DEX-Start)
 - **Investoren zahlen SOL (off-chain)**, erhalten Token **SOFORT** aus Contract-1-Vault
 - **20% Airdrop-Bonus** wird direkt beim Kauf gutgeschrieben (aus Gift Vault)
 - **KEIN Vesting, KEINE Sperre** – Token sind sofort im Besitz des Investors
-- **Gesammelte SOL** landen in Admin-Wallet und werden für LP-Erhöhungen genutzt
+- **Gesammelte SOL** landen in Admin-Wallet und werden für Raydium LP-Erhöhungen genutzt
 
 #### 3. GIFT VAULT (500 Mio)
 - **20% Bonus** für Investoren (aus diesem Topf)
 - **Starter-Tokens:** 7 Token pro Neuregistrierung
 - **Earlybird-Boni** für erste User/Investoren
 - **Dev-Anteile** für Team
-- Flexible Community-Geschenke (Rest-Tokens alles aufbrauchen vor dem offiziellen Start)
+- **Flexible Community-Geschenke** Rest-Tokens alles verteilen (Airdrops) vor dem offiziellen Start
 
 ---
 

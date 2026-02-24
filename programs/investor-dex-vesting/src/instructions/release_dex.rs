@@ -51,14 +51,14 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token, TokenAccount, Transfer};
 use crate::states::config::Config;
-use crate::errors::ErrorCode;
+use crate::errors::DexErrors;
 
 // Monatliche Verteilung von 100 Mio Token mit 9 Decimals: 100_000_000 * 10^9
 // 1 Token = 1_000_000_000 (9 Decimals)
 pub const TRANCHE_AMOUNT: u64 = 100_000_000 * 1_000_000_000;    // 100 Mio (9 Decimals)
 pub const MIN_DAYS_BETWEEN_RELEASES: i64 = 30 * 86400;          // 30 Tage in Sekunden
-pub const STARTER_AMOUNT: u64 = 7 * 1_000_000_000;              // 7 Tokens
-pub const BONUS_PERCENT: u8 = 20;                               // 20%
+//pub const STARTER_AMOUNT: u64 = 7 * 1_000_000_000;              // 7 Tokens
+//pub const BONUS_PERCENT: u8 = 20;                               // 20%
 
 #[derive(Accounts)]
 pub struct ReleaseDex<'info> {
@@ -149,17 +149,17 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
     // 1.1 Maximale Tranchenanzahl (0-3, denn 4 ist das Maximum)
     //     released_tranches zählt von 0 aufwärts. Bei 3 ist die nächste
     //     Freigabe die 4. und letzte. Bei 4 ist Schluss.
-    require!(config.released_tranches < 4, ErrorCode::MaxTranchesReached);
+    require!(config.released_tranches < 4, DexErrors::MaxTranchesReached);
 
     // 1.2 30-Tage-Abstand seit der letzten Freigabe
     //     Wir berechnen den frühestmöglichen Zeitpunkt für die nächste Freigabe
     //     und vergleichen mit der aktuellen Blockchain-Zeit.
     let min_next_release = config.last_release
         .checked_add(MIN_DAYS_BETWEEN_RELEASES)
-        .ok_or(ErrorCode::NumericalOverflow)?;
+        .ok_or(DexErrors::NumericalOverflow)?;
     require!(
         clock.unix_timestamp >= min_next_release,
-        ErrorCode::ReleaseTooSoon
+        DexErrors::ReleaseTooSoon
     );
 
     // 1.3 Genügend Tokens im DEX-Vault
@@ -167,7 +167,7 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
     //     Sollte eigentlich immer wahr sein, aber sicher ist sicher.
     require!(
         dex_vault.amount >= TRANCHE_AMOUNT,
-        ErrorCode::InsufficientVaultBalance
+        DexErrors::InsufficientVaultBalance
     );
 
     // ======================================================
@@ -206,7 +206,7 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
     config.released_tranches = config
         .released_tranches
         .checked_add(1)
-        .ok_or(ErrorCode::NumericalOverflow)?;
+        .ok_or(DexErrors::NumericalOverflow)?;
 
     // 3.2 Zeitstempel der letzten Freigabe aktualisieren
     //     Wichtig für die 30-Tage-Wartezeit bei der nächsten Freigabe

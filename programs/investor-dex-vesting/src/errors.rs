@@ -1,5 +1,43 @@
 use anchor_lang::prelude::*;
 
+// ========== BASIS-FEHLER (für alle) ==========
+#[error_code]
+pub enum BaseErrors {
+    #[msg("Nur der Admin darf diese Aktion ausführen.")]
+    Unauthorized,
+    #[msg("Numerischer Überlauf.")]
+    NumericalOverflow,
+    #[msg("Ungültiger Betrag.")]
+    InvalidAmount,
+    #[msg("Konto nicht initialisiert.")]
+    AccountNotInitialized,
+    #[msg("Konto bereits initialisiert.")]
+    AccountAlreadyInitialized,
+    #[msg("PDA Bump ungültig.")]
+    InvalidBump,
+}
+
+// ========== DEX VESTING (release_dex.rs) ==========
+#[error_code]
+pub enum DexErrors {
+    #[msg("Maximale Anzahl Tranchen bereits erreicht (4/4).")]
+    MaxTranchesReached,
+    #[msg("Es müssen mindestens 30 Tage seit der letzten Freigabe vergangen sein.")]
+    ReleaseTooSoon,
+    #[msg("Nicht genügend Tokens im DEX-Vault.")]
+    InsufficientVaultBalance,
+    #[msg("Der DEX-Vault stimmt nicht mit der Config.")]
+    InvalidVault,
+    #[msg("Das Admin-Token-Konto gehört nicht dem Admin.")]
+    InvalidTokenAccountOwner,
+    #[msg("Das Admin-Token-Konto hat den falschen Mint.")]
+    InvalidTokenAccountMint,
+    #[msg("Nur der Admin darf diese Aktion ausführen.")]
+    Unauthorized,
+    #[msg("Numerischer Überlauf.")]
+    NumericalOverflow,
+}
+
 #[error_code]
 pub enum VestingError {
     // ========== INVESTOR ERRORS ==========
@@ -11,10 +49,6 @@ pub enum VestingError {
     
     #[msg("Calculated claim amount is zero")]
     NothingToClaim,
-    
-    // ========== ADMIN ERRORS ==========
-    #[msg("Only admin can call this function")]
-    Unauthorized,
     
     #[msg("Admin privileges have already been revoked")]
     AdminAlreadyRevoked,
@@ -47,22 +81,28 @@ pub enum VestingError {
     InvalidBump,
 }
 
+// ========== INVESTOREN-VERKAUF (register_investor.rs) ==========
 #[error_code]
-pub enum ErrorCode {
-    #[msg("Nur der Admin darf diese Aktion ausführen.")]
-    Unauthorized,
-    #[msg("Maximale Anzahl an Tranchen bereits erreicht (4/4).")]
-    MaxTranchesReached,
-    #[msg("Es müssen mindestens 30 Tage seit der letzten Freigabe vergangen sein.")]
-    ReleaseTooSoon,
-    #[msg("Nicht genügend Tokens im DEX-Vault.")]
-    InsufficientVaultBalance,
-    #[msg("Der angegebene Vault stimmt nicht mit dem in der Config überein.")]
-    InvalidVault,
-    #[msg("Das Admin-Token-Konto gehört nicht dem Admin.")]
-    InvalidTokenAccountOwner,
-    #[msg("Das Admin-Token-Konto hat den falschen Mint.")]
-    InvalidTokenAccountMint,
-    #[msg("Numerischer Überlauf.")]
-    NumericalOverflow,
+pub enum RegisterInvestorErrors {
+    #[msg("Nicht genug Tokens im Investor-Vault")]
+    InsufficientInvestorVaultBalance,
+    #[msg("Nicht genug Tokens im Gift-Vault für Bonus")]
+    InsufficientGiftVaultBalance,
+    #[msg("Investor-Token-Konto gehört nicht dem Investor.")]
+    InvalidInvestorTokenOwner,
+    #[msg("Investor-Token-Konto hat falschen Mint.")]
+    InvalidInvestorTokenMint,
+}
+
+// ========== STARTER-TOKENS (claim_starter.rs) ==========
+#[error_code]
+pub enum StarterErrors {
+    #[msg("Nicht genug Tokens im Gift-Vault für Starter.")]
+    InsufficientGiftVaultBalance,
+    #[msg("User hat bereits Starter-Tokens erhalten.")]
+    AlreadyClaimed,
+    #[msg("User-Token-Konto gehört nicht dem User.")]
+    InvalidUserTokenOwner,
+    #[msg("User-Token-Konto hat falschen Mint.")]
+    InvalidUserTokenMint,
 }

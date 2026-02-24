@@ -148,7 +148,7 @@ pub mod errors;
 
 use instructions::initialize::*;
 use instructions::release_dex::*;
-//use instructions::release_investor_tokens::*;
+use instructions::register_investor::*;
 
 // Programm-ID aus declare_id! übernehmen
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
@@ -157,12 +157,12 @@ declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
 pub mod investor_dex_vesting {
     use super::*;
 
-    // 1. INITIALISIERUNG
+    // 1. INITIALISIERUNG (einmalig nach Deploy)
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         instructions::initialize::handler(ctx)
     }
 
-    // 2. DEX-VESTING (für LP-Nachfüllungen)
+    // 2. DEX-VESTING (für LP-Erhöhungen)
     //    - 400 Mio Tokens insgesamt
     //    - 4 Tranchen à 100 Mio
     //    - Nur für Admin (um LP zu erhöhen)
@@ -171,19 +171,33 @@ pub mod investor_dex_vesting {
         instructions::release_dex::handler(ctx)
     }
 
-    // 3. INVESTOREN-VERKAUF (für Webseiten-Käufer)
+    // 3. INVESTOREN-VERKAUF (für Webseiten-Käufer mit 20% Bonus aus Gift-Vault)
     //    - 500 Mio Tokens insgesamt
-    //    - Beliebig viele kleine Tranchen (je nach Kauf)
+    //    - Kleinste Tranche (ab 100.-$ = 100'000 Token)
     //    - Für Investoren (OTC-Verkauf)
-    //    - Sofortige Auszahlung, kein Vesting
-    //    - 20% Bonus automatisch
-    //pub fn release_investor_tokens(ctx: Context<ReleaseInvestor>) -> Result<()> {
-    //    instructions::release_investor::handler(ctx)
+    //    - Admin ruft auf mit: amount (gekaufte Menge)
+    //    - Holt amount aus investor_vault
+    //    - Holt bonus (20%) aus gift_vault
+    pub fn register_investor(ctx: Context<RegisterInvestor>, amount: u64) -> Result<()> {
+        instructions::register_investor::handler(ctx, amount)
+    }
+
+    // 4. STARTER-TOKENS (7 für jeden neuen User)
+    //    - Admin ruft auf mit: user (Pubkey)
+    //    - Holt 7 Tokens aus gift_vault
+    //    - Pro User einmalig (PDA)
+    //pub fn claim_starter(ctx: Context<ClaimStarter>) -> Result<()> {
+    //    instructions::claim_starter::handler(ctx)
     //}
 
-    // 4. ADMIN REVOKE (später)
-    //pub fn revoke_admin(ctx: Context<RevokeAdmin>) -> Result<()> {
-    //    instructions::revoke_admin::handler(ctx)
+    // 5. EARLYBIRD-BONUS (optional, für erste User)
+    //pub fn earlybird_bonus(ctx: Context<EarlybirdBonus>, amount: u64) -> Result<()> {
+    //    instructions::earlybird_bonus::handler(ctx, amount)
+    //}
+
+    // 6. DEV-ALLOCATION (optional, für Team)
+    //pub fn dev_allocation(ctx: Context<DevAllocation>, amount: u64) -> Result<()> {
+    //    instructions::dev_allocation::handler(ctx, amount)
     //}
 
 }

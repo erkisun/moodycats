@@ -34,7 +34,6 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, Token, TokenAccount};
 use crate::states::config::Config;
-//use crate::errors::*;
 
 // Instruction Validation (On-Chain - Context)
 // Definiert alle Konten, die bei der Initialisierung benötigt werden:
@@ -93,6 +92,18 @@ pub struct Initialize<'info> {
     )]
     pub investor_vault: Account<'info, TokenAccount>,
 
+    // Gift-Vault (PDA-Token-Account)
+    // Wird mit .csv aus DB manuell verteilt : Airdrops, Investoren Bonus, Starter-Tokens, Earlybirds, Dev
+    #[account(
+        init,
+        payer = admin,
+        token::mint = mint,
+        token::authority = config,
+        seeds = [b"gift_vault"],
+        bump,
+    )]
+    pub gift_vault: Account<'info, TokenAccount>,
+
     // Das Standard-SPL-Token-Program von Solana.
     // Wird für die Initialisierung der Token-Vaults benötigt.
     pub token_program: Program<'info, Token>,
@@ -129,15 +140,17 @@ pub fn handler(ctx: Context<Initialize>) -> Result<()> {
     config.admin = ctx.accounts.admin.key();
     // Token-Mint (damit wir später wissen, welcher Token zu uns gehört)
     config.mint = ctx.accounts.mint.key();
-    // Die Adressen der beiden Vaults (für schnellen Zugriff)
+    // Die Adressen der Vaults (für schnellen Zugriff)
     config.dex_vault = ctx.accounts.dex_vault.key();
     config.investor_vault = ctx.accounts.investor_vault.key();
+    config.gift_vault = ctx.accounts.gift_vault.key();
     
     // 2. BUMPS SPEICHERN (für spätere PDA-Zugriffe)
     // ctx.bumps enthält alle automatisch berechneten Bumps
     config.bump = ctx.bumps.config;                         // Bump der Config selbst
     config.dex_vault_bump = ctx.bumps.dex_vault;            // Bump des DEX-Vaults
     config.investor_vault_bump = ctx.bumps.investor_vault;  // Bump des Investor-Vaults
+    config.gift_vault_bump = ctx.bumps.gift_vault;          // Bump des Geschenke-Vaults
     
     // 3. VESTING-PARAMETER INITIALISIEREN 
     // Noch keine Tranche freigegeben (0 von 4)
@@ -155,9 +168,11 @@ pub fn handler(ctx: Context<Initialize>) -> Result<()> {
     msg!("Mint: {}", config.mint);
     msg!("DEX-Vault: {}", config.dex_vault);
     msg!("Investor-Vault: {}", config.investor_vault);
+    msg!("Gift-Vault: {}", config.gift_vault);
     msg!("Bump Config: {}", config.bump);
     msg!("Bump DEX: {}", config.dex_vault_bump);
     msg!("Bump Investor: {}", config.investor_vault_bump);
+    msg!("Bump Gift: {}", config.gift_vault_bump);
     msg!("Initialisierung abgeschlossen. Viel Erfolg! 🚀");
 
     Ok(())
