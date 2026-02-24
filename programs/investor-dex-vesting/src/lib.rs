@@ -149,6 +149,7 @@ pub mod errors;
 use instructions::initialize::*;
 use instructions::release_dex::*;
 use instructions::register_investor::*;
+use instructions::claim_starter::*;
 
 // Programm-ID aus declare_id! übernehmen
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
@@ -186,9 +187,9 @@ pub mod investor_dex_vesting {
     //    - Admin ruft auf mit: user (Pubkey)
     //    - Holt 7 Tokens aus gift_vault
     //    - Pro User einmalig (PDA)
-    //pub fn claim_starter(ctx: Context<ClaimStarter>) -> Result<()> {
-    //    instructions::claim_starter::handler(ctx)
-    //}
+    pub fn claim_starter(ctx: Context<ClaimStarter>) -> Result<()> {
+        instructions::claim_starter::handler(ctx)
+    }
 
     // 5. EARLYBIRD-BONUS (optional, für erste User)
     //pub fn earlybird_bonus(ctx: Context<EarlybirdBonus>, amount: u64) -> Result<()> {
