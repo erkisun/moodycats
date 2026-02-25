@@ -50,6 +50,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token, TokenAccount, Transfer};
 use crate::states::config::Config;
+use crate::errors::BaseErrors;
 use crate::errors::StarterErrors;
 
 pub const STARTER_AMOUNT: u64 = 7 * 1_000_000_000;  // 7 Tokens (9 Decimals)
@@ -81,7 +82,7 @@ pub struct ClaimStarter<'info> {
     #[account(
         seeds = [b"config"],
         bump = config.bump,
-        constraint = config.admin == admin.key() @ crate::errors::BaseErrors::Unauthorized,
+        constraint = config.admin == admin.key() @ BaseErrors::Unauthorized,
     )]
     pub config: Account<'info, Config>,
 
@@ -180,7 +181,7 @@ pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     msg!("Betrag: 7 Tokens ({})", STARTER_AMOUNT);
     msg!("Aus Gift-Vault: {}", ctx.accounts.gift_vault.key());
     msg!("An Token-Konto: {}", ctx.accounts.user_token_account.key());
-    msg!("Claim-PDA: {}", ctx.accounts.starter_claim.key());
+    msg!("Claim-PDA: {}", claim.key());
     msg!("Zeitpunkt: {}", claim.claimed_at);
     msg!("Verbleibend im Gift-Vault: {}", 
          ctx.accounts.gift_vault.amount - STARTER_AMOUNT);

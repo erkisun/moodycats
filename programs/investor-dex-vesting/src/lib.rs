@@ -150,6 +150,7 @@ use instructions::initialize::*;
 use instructions::release_dex::*;
 use instructions::register_investor::*;
 use instructions::claim_starter::*;
+use instructions::earlybird_bonus::*;
 
 // Programm-ID aus declare_id! übernehmen
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
@@ -192,7 +193,7 @@ pub mod investor_dex_vesting {
     }
 
     // 5. EARLYBIRD-BONUS (für die ersten 100k User Registrationen)
-    pub fn earlybird_bonus(ctx: Context<EarlybirdBonus>, amount: u64) -> Result<()> {
+    pub fn earlybird_bonus(ctx: Context<EarlyBirdBonus>, amount: u64) -> Result<()> {
         instructions::earlybird_bonus::handler(ctx, amount)
     }
 

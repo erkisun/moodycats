@@ -112,8 +112,8 @@ pub enum StarterErrors {
 pub enum EarlyBirdErrors {
     #[msg("Nicht genug Tokens im Gift-Vault für Starter.")]
     InsufficientGiftVaultBalance,
-    #[msg("User hat bereits Starter-Tokens erhalten.")]
-    AlreadyClaimed,
+    #[msg("User hat bereits EarlyBird-Bonus erhalten.")]
+    AlreadyEarlyBirdBonusClaimed,
     #[msg("User-Token-Konto gehört nicht dem User.")]
     InvalidUserTokenOwner,
     #[msg("User-Token-Konto hat falschen Mint.")]

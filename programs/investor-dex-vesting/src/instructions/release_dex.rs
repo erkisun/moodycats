@@ -57,8 +57,6 @@ use crate::errors::DexErrors;
 // 1 Token = 1_000_000_000 (9 Decimals)
 pub const TRANCHE_AMOUNT: u64 = 100_000_000 * 1_000_000_000;    // 100 Mio (9 Decimals)
 pub const MIN_DAYS_BETWEEN_RELEASES: i64 = 30 * 86400;          // 30 Tage in Sekunden
-//pub const STARTER_AMOUNT: u64 = 7 * 1_000_000_000;              // 7 Tokens
-//pub const BONUS_PERCENT: u8 = 20;                               // 20%
 
 #[derive(Accounts)]
 pub struct ReleaseDex<'info> {
