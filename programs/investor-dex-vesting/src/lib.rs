@@ -191,10 +191,10 @@ pub mod investor_dex_vesting {
         instructions::claim_starter::handler(ctx)
     }
 
-    // 5. EARLYBIRD-BONUS (optional, für erste User)
-    //pub fn earlybird_bonus(ctx: Context<EarlybirdBonus>, amount: u64) -> Result<()> {
-    //    instructions::earlybird_bonus::handler(ctx, amount)
-    //}
+    // 5. EARLYBIRD-BONUS (für die ersten 100k User Registrationen)
+    pub fn earlybird_bonus(ctx: Context<EarlybirdBonus>, amount: u64) -> Result<()> {
+        instructions::earlybird_bonus::handler(ctx, amount)
+    }
 
     // 6. DEV-ALLOCATION (optional, für Team)
     //pub fn dev_allocation(ctx: Context<DevAllocation>, amount: u64) -> Result<()> {

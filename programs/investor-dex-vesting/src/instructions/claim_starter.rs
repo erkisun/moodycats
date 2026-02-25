@@ -34,7 +34,7 @@
 // PRÜFUNGEN (5):
 // 1. admin == config.admin
 // 2. gift_vault.amount >= STARTER_AMOUNT (7 Tokens)
-// 3. starter_claim PDA existiert noch NICHT
+// 3. starter_claim PDA existiert noch NICHT (wird durch init geprüft)
 // 4. user_token_account.owner == user
 // 5. user_token_account.mint == config.mint
 //
@@ -57,9 +57,18 @@ pub const STARTER_AMOUNT: u64 = 7 * 1_000_000_000;  // 7 Tokens (9 Decimals)
 // StarterClaim-PDA: Speichert, wer schon Starter-Tokens erhalten hat
 #[account]
 pub struct StarterClaim {
-    pub user: Pubkey,           // Der User, der erhalten hat
-    pub claimed_at: i64,        // Wann (Unix-Timestamp)
-    pub bump: u8,               // Bump für diesen PDA
+    /// Der User, der die Starter-Tokens erhalten hat
+    pub user: Pubkey,
+    
+    /// Zeitpunkt der Auszahlung (Unix-Timestamp)
+    pub claimed_at: i64,
+    
+    /// Bump für diesen PDA (für spätere Zugriffe, falls nötig)
+    pub bump: u8,
+}
+
+impl StarterClaim {
+    pub const LEN: usize = 8 + 32 + 8 + 1;  // Discriminator + user + claimed_at + bump
 }
 
 #[derive(Accounts)]
@@ -91,6 +100,7 @@ pub struct ClaimStarter<'info> {
     pub user: SystemAccount<'info>,
 
     /// Das Token-Konto des Users (wo die 7 Tokens hin sollen)
+    /// Muss vorher existieren (der User muss es angelegt haben)
     #[account(
         mut,
         constraint = user_token_account.owner == user.key() @ StarterErrors::InvalidUserTokenOwner,
@@ -100,10 +110,11 @@ pub struct ClaimStarter<'info> {
 
     /// StarterClaim-PDA: Beweis, dass dieser User schon erhalten hat
     /// Wird hier neu erstellt – falls es schon existiert, schlägt die TX fehl
+    /// Das ist der Replay-Schutz!
     #[account(
         init,
         payer = admin,
-        space = 8 + std::mem::size_of::<StarterClaim>(),
+        space = StarterClaim::LEN,
         seeds = [b"starter", user.key().as_ref()],
         bump,
     )]
@@ -118,10 +129,11 @@ pub struct ClaimStarter<'info> {
 
 pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     // ======================================================
-    // 1. PRÜFUNGEN
+    // 1. PRÜFUNGEN (was nicht schon durch Constraints abgedeckt ist)
     // ======================================================
     
     // 1.1 Genug Tokens im Gift-Vault?
+    //     (Constaints prüfen nur die Konten, nicht den Saldo)
     require!(
         ctx.accounts.gift_vault.amount >= STARTER_AMOUNT,
         StarterErrors::InsufficientGiftVaultBalance
@@ -130,6 +142,8 @@ pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     // ======================================================
     // 2. PDA-SIGNER VORBEREITEN
     // ======================================================
+    // Der Gift-Vault hat die Config als Authority.
+    // Um Tokens zu transferieren, müssen wir als Config signieren.
     let seeds = &[&b"config"[..], &[ctx.accounts.config.bump]];
     let signer_seeds = &[&seeds[..]];
 
@@ -158,15 +172,19 @@ pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     claim.bump = ctx.bumps.starter_claim;
 
     // ======================================================
-    // 5. LOGGING
+    // 5. LOGGING (für Transparenz und Batch-Protokoll)
     // ======================================================
     msg!("=== STARTER-TOKENS AUSGEZAHLT ===");
+    msg!("Admin: {}", ctx.accounts.admin.key());
     msg!("User: {}", ctx.accounts.user.key());
     msg!("Betrag: 7 Tokens ({})", STARTER_AMOUNT);
     msg!("Aus Gift-Vault: {}", ctx.accounts.gift_vault.key());
     msg!("An Token-Konto: {}", ctx.accounts.user_token_account.key());
     msg!("Claim-PDA: {}", ctx.accounts.starter_claim.key());
-    msg!("Verbleibend im Gift-Vault: {}", ctx.accounts.gift_vault.amount - STARTER_AMOUNT);
+    msg!("Zeitpunkt: {}", claim.claimed_at);
+    msg!("Verbleibend im Gift-Vault: {}", 
+         ctx.accounts.gift_vault.amount - STARTER_AMOUNT);
+    msg!("=== TRANSAKTION ERFOLGREICH ===");
 
     Ok(())
 }
