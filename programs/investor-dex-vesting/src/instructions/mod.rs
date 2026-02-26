@@ -13,7 +13,6 @@ pub mod claim_starter;
 pub mod earlybird_bonus;
 pub mod dev_allocation;
 pub mod revoke_admin;
-// pub mod revoke_admin;
 
 // Die Context-Typen re-exportieren, damit lib.rs sie einfach importieren kann
 pub use initialize::Initialize;
