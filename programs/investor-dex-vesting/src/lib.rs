@@ -11,85 +11,48 @@
 // Contract 3 : anchor new treasury-vesting        ─┘
 //
 // -----------------------------------------------
-// MOODYCATS TOKENOMICS
+// MOODYCATS TOKENOMICS (FINAL)
 //
-// TOTAL SUPPLY: 5,000,000,000 Token (5 Mia)
+// TOTAL SUPPLY: 5.000.000.000 Token (5 Mia)
 //
 // 1. DEX PRE-LAUNCH: 500 Mio (10%)
 //    - Initial LP auf Raydium: 100 Mio Token + ~15 SOL (manuell durch Dev)
-//    - Restliche 400 Mio Token: liegen im DEX-Vesting-Vault von Contract 1
-//    - Diese 400 Mio werden in 4 manuellen Tranchen à 100 Mio an den Admin freigegeben
-//    - Admin fügt jede Tranche + gesammelte SOL manuell ins Raydium-LP hinzu
+//    - DEX-Vesting: 400 Mio Token im DEX-Vault (4 Tranchen à 100 Mio)
 //
 // 2. WEBSEITE-INVESTOREN: 500 Mio (10%)
 //    - Verkauf über Webseite: 0.001 $/Token (fester Preis, teurer als DEX-Start)
-//    - Investoren zahlen SOL (off-chain), erhalten Token SOFORT aus Contract-1-Vault
-//    - 20% Airdrop-Bonus wird direkt beim Kauf gutgeschrieben
-//    - KEIN Vesting, KEINE Sperre – Token sind sofort im Besitz des Investors
+//    - Investoren zahlen SOL (off-chain), erhalten Token SOFORT aus Investor-Vault
+//    - 20% Bonus kommt aus GIFT-VAULT
+//    - KEIN Vesting, KEINE Sperre
 //    - Gesammelte SOL landen in Admin-Wallet und werden für LP-Erhöhungen genutzt
 //
-// 3. APP LAUNCH: 500 Mio (10%)
-//    - Eigenständiger Contract 2, wird Nov 2026 aktiviert
-//    - 1 Token = 1 API-Call, Nutzung der App (app-per-pay-use)
+// 3. GIFT-VAULT (NEU): 500 Mio (10%)
+//    - 20% Bonus für Investoren
+//    - Starter-Tokens (7 pro User)
+//    - Earlybird-Boni (100 Tokens für erste 100k User)
+//    - Dev-Anteile (50 Mio, gestaffelt in 3 Phasen)
+//    - Flexible Community-Geschenke
 //
-// 4. TREASURY VESTING: 3.500 Mio (70%)
+// 4. APP LAUNCH: 500 Mio (10%)
+//    - Eigenständiger Contract 2, ab Nov 2026
+//    - 1 Token = 1 API-Call (app-per-pay-use)
+//
+// 5. TREASURY VESTING: 2.500 Mio (50%)
 //    - Eigenständiger Contract 3
-//    - 7 Jahre linear, 500 Mio pro Jahr an Nutzer (Neuregistration, Airdrops, app-per-pay-use 1 API Call)
-//    - Ausschüttung aller restlichen Token an alle (egal ob Nutzer und Investor) falls pro Jahr weniger als 500 Mio Neu-Registrationen
-//    - Für spätere LP-Erhöhungen oder App-Subventionen
+//    - 5 Jahre linear, 500 Mio pro Jahr an Nutzer
+//    - Ausschüttung aller restlichen Token an alle, falls Ziele unterschritten
 //
 // -----------------------------------------------
-// CONTRACT 1: INVESTOREN-VERKAUF + DEX-VESTING
+// CONTRACT 1: FUNKTIONSÜBERSICHT
 // -----------------------------------------------
 //
-// A. VORBEREITUNG (Dev / Admin)
-// ├─► Token mit Solana CLI erstellen, Metadata hinzufügen
-// ├─► Raydium LP: 100 Mio Token + ~15 SOL (manuell, via UI)
-// ├─► Mint Authority REVOKE (sofort nach Mint)
-// ├─► Freeze Authority REVOKE (sofort)
-// ├─► Update Authority / Metadaten REVOKE (sofort)
-// └─► ✅ Token handelbar auf DEX
-//
-// B. CONTRACT 1 DEPLOY & INIT
-// ├─► initialize(): Config mit Admin = Dev, Token-Mint, Vault-Adressen, Bumps
-// ├─► 500 Mio Token (Investoren) + 400 Mio Token (DEX-Rest) in Contract-Vaults transferieren
-// └─► ✅ Contract bereit
-//
-// C. DEX-VESTING (manuelle Freigabe durch Admin)
-// ├─► Nur Admin darf release_dex_tokens() aufrufen
-// ├─► Pro Aufruf: 100 Mio Token aus DEX-Vault an Admin-Wallet
-// ├─► Maximal 4 Aufrufe, mindestens 30 Tage Abstand
-// ├─► Keine Automatisierung – Admin entscheidet, wann freigegeben wird
-// └─► Nach jeder Freigabe: Admin fügt 100 Mio Token + passende SOL manuell ins Raydium-LP hinzu
-//
-// D. INVESTOREN-KÄUFE (OTC)
-// ├─► Investor zahlt SOL auf Webseite (off-chain)
-// ├─► Webseite ruft register_investor() auf:
-//     • Berechnet Token-Menge + 20% Bonus
-//     • Erstellt optional eine InvestorReceipt (PDA, nur für Transparenz)
-//     • Transferiert Token SOFORT aus Investor-Vault an Investor-Wallet
-// ├─► Kein Vesting, keine Sperrfrist
-// └─► SOL verbleibt in Admin-Wallet (für spätere LP-Erhöhungen)
-//
-// E. LP-ERHÖHUNG (manuell, durch Admin)
-// ├─► Admin hat 100 Mio Token aus release_dex_tokens() erhalten
-// ├─► Admin hat SOL von Investoren gesammelt (in eigener Wallet)
-// ├─► Admin geht zu Raydium UI → Add Liquidity
-// ├─► Fügt 100 Mio Token + SOL-Betrag (1:1 USD-Wert, geschätzt oder per Oracle) hinzu
-// ├─► Wiederholen, bis alle 400 Mio DEX-Token im LP sind
-// └─► Jeder Schritt ist on-chain sichtbar → Vertrauensbeweis
-//
-// F. DEZENTRALISIERUNG (nach Abschluss aller DEX-Freigaben)
-// ├─► revoke_admin(): Admin setzt sich selbst auf 0x000… (Null-Adresse)
-// ├─► Danach kann niemand mehr release_dex_tokens() aufrufen
-// ├─► Update Authority revoken (Metaplex) → Token immutable
-// ├─► LP Authority (falls gesetzt) burnen oder an Null-Adresse senden
-// └─► ✅ Contract 1 ist herrenlos, DEX-Vesting abgeschlossen
-//
-// G. NICHT VERKAUFTE INVESTOREN-TOKENS (optional)
-// ├─► Falls nach Ende der Pre-Launch-Phase noch Tokens im Investor-Vault sind
-// ├─► Können verbrannt werden (Supply-Reduktion) oder in App-Contract wandern
-// └─► Stärkt Vertrauen und Knappheit
+// 1. initialize()  – Einmalige Initialisierung (Config, 3 Vaults)
+// 2. release_dex() – DEX-Tranchen freigeben (4×100 Mio, 30d Abstand)
+// 3. register_investor(amount) – Investoren-Kauf (Grundbetrag aus Investor-Vault, 20% Bonus aus Gift-Vault)
+// 4. claim_starter(user) – 7 Starter-Tokens für Neuregistrierungen (aus Gift-Vault, mit Replay-Schutz)
+// 5. earlybird_bonus(user, amount) – Extra-Boni für erste 100k User (aus Gift-Vault)
+// 6. dev_allocation(phase) – Dev-Anteile gestaffelt (Phase 1,2,3; aus Gift-Vault)
+// 7. revoke_admin() – Admin-Rechte entziehen (nach Abschluss von Contract 1)
 //
 // -----------------------------------------------
 // WICHTIG: Was Contract 1 NICHT kann
@@ -101,42 +64,7 @@
 // ❌ Keine Mint-/Freeze-Funktionen
 // ❌ Keine Upgradeability
 //
-// 🔥 Die 5 Gründe, warum Automatisierung hier schadet
-//  1. Komplexität explodiert
-//     Mein Contract müsste plötzlich SOL empfangen und verwalten – das bedeutet, ich brauche einen Treasury-PDA, der SOL hält.
-//     Ich brauche einen Oracle (oder einen festen Kurs), um den aktuellen Preis zu kennen.
-//     Ich brauche Raydium-CPI mit Dutzenden von Accounts.
-//     Ich brauche Fehlerbehandlung: Was, wenn der Raydium-Call fehlschlägt? Kriegt der Investor dann trotzdem seine Tokens? Oder wird die ganze Transaktion rückgängig gemacht?
-//
-// 👉 Aus einem 3-Funktionen-Contract wird ein 500-Zeilen-Monster.
-//  2. Sicherheitsrisiken schießen durch die Decke
-//     Ein Contract, der SOL hält, ist ein lohnendes Ziel für Hacker.
-//     Ein falscher Oracle-Wert kann dazu führen, dass du zu wenig SOL ins LP steckst (der Pool wird unfair) oder zu viel (du verschenkst Liquidität).
-//     Ein Fehler im CPI-Call kann bedeuten, dass Tokens oder SOL verschwinden.
-//
-// 👉 Ohne teures Audit will das kein Investor anfassen.
-//  3. Transparenz geht verloren
-//     Bei manuellen Aktionen sieht jeder on-chain: *„Am 15.03. hat der Dev 100M Token + 500 SOL ins LP gesteckt.“*
-//     Das ist ein Vertrauensbeweis.
-//     Bei Automatisierung sieht man nur noch: „Irgendein Contract hat irgendwas getan.“
-//     Investoren fragen sich: „Wurde da richtig gerechnet? Hat der Dev sich selbst bevorzugt?“
-//
-// 👉 Manuell ist transparenter.
-//  4. Flexibilität wird eingeschränkt
-//     Wenn du manuell LP hinzufügst, kannst du den perfekten Zeitpunkt wählen.
-//        Ist der Markt gerade bullish? Dann steckst du mehr SOL rein.
-//        Ist der Markt flau? Dann wartest du etwas.
-//     Automatisch heißt: Immer zum gleichen Kurs, egal ob gut oder schlecht.
-//
-// 👉 Manuell = strategisch, automatisch = starr.
-//  5. Zeit- und Kostenfresser
-//     Automatisierung bedeutet:
-//         Wochen statt Tage Entwicklung
-//         Audits ($5k–$20k statt $0)
-//         Testing, Debugging, Frustration
-//     All das lenkt dich von deiner eigentlichen Mission ab: Die App zu bauen.
-//
-// 👉 Mein Ziel ist nicht, der beste DeFi-Developer zu sein, sondern eine erfolgreiche App zu haben.
+// 🔥 Warum Automatisierung hier nicht sinnvoll ist (siehe ausführliche Begründung weiter unten)
 // -----------------------------------------------
 
 use anchor_lang::prelude::*;
@@ -151,6 +79,7 @@ use instructions::release_dex::*;
 use instructions::register_investor::*;
 use instructions::claim_starter::*;
 use instructions::earlybird_bonus::*;
+use instructions::dev_allocation::*;
 
 // Programm-ID aus declare_id! übernehmen
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
@@ -187,19 +116,35 @@ pub mod investor_dex_vesting {
     // 4. STARTER-TOKENS (7 für jeden neuen User)
     //    - Admin ruft auf mit: user (Pubkey)
     //    - Holt 7 Tokens aus gift_vault
-    //    - Pro User einmalig (PDA)
+    //    - Pro User einmalig (PDA = Replay-Schutz)
     pub fn claim_starter(ctx: Context<ClaimStarter>) -> Result<()> {
         instructions::claim_starter::handler(ctx)
     }
 
-    // 5. EARLYBIRD-BONUS (für die ersten 100k User Registrationen)
+    // 5. EARLYBIRD-BONUS (für erste User, z.B. 100 Tokens für die ersten 100k)
+    //    - Admin ruft auf mit: user, amount
+    //    - Holt amount aus gift_vault
     pub fn earlybird_bonus(ctx: Context<EarlyBirdBonus>, amount: u64) -> Result<()> {
         instructions::earlybird_bonus::handler(ctx, amount)
     }
 
-    // 6. DEV-ALLOCATION (optional, für Team)
-    //pub fn dev_allocation(ctx: Context<DevAllocation>, amount: u64) -> Result<()> {
-    //    instructions::dev_allocation::handler(ctx, amount)
+    // 6. DEV-ALLOCATION (gestaffelte Auszahlung der Dev-Anteile)
+    //    - Phase 1: 20 Mio (nach Abschluss Contract 1)
+    //    - Phase 2: 15 Mio (nach Livegang Contract 2)
+    //    - Phase 3: 15 Mio (beim Start Contract 3)
+    //    - Admin ruft auf mit: phase (1,2,3)
+    //    - Holt den Phasen-Betrag aus gift_vault
+    pub fn dev_allocation(ctx: Context<DevAllocation>, phase: u8) -> Result<()> {
+        instructions::dev_allocation::handler(ctx, phase)
+    }
+
+    // .. später .. //
+    
+    // 7. ADMIN REVOKE (nach Abschluss aller Aufgaben)
+    //    - Admin setzt sich selbst auf Null-Adresse
+    //    - Danach ist Contract 1 herrenlos
+    //pub fn revoke_admin(ctx: Context<RevokeAdmin>) -> Result<()> {
+    //    instructions::revoke_admin::handler(ctx)
     //}
 
 }

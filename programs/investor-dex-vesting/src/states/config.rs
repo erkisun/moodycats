@@ -20,6 +20,9 @@ pub struct Config {
     pub gift_vault: Pubkey,           // PDA-Token-Account (500 Mio Token)
     pub released_tranches: u8,        // 0..4
     pub last_release: i64,            // Unix-Timestamp der letzten Freigabe
+    pub dev_phase1_paid: bool,        // 20 Mio an Dev / Admin schon ausgezahlt?
+    pub dev_phase2_paid: bool,        // 15 Mio an Dev / Admin schon ausgezahlt?
+    pub dev_phase3_paid: bool,        // 15 Mio an Dev / Admin schon ausgezahlt?
     pub bump: u8,                     // Bump der Config selbst
     pub dex_vault_bump: u8,           // Bump des DEX-Vaults
     pub investor_vault_bump: u8,      // Bump des Investor-Vaults

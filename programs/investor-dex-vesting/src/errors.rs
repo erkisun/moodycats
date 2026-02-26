@@ -17,6 +17,21 @@ pub enum BaseErrors {
     InvalidBump,
 }
 
+// ========== DEV-ALLOCATION (dev_allocation.rs) ==========
+#[error_code]
+pub enum DevErrors {
+    #[msg("Ungültige Phase. Nur 1, 2 oder 3 erlaubt.")]
+    InvalidPhase,
+     #[msg("Diese Phase wurde bereits ausgezahlt.")]
+    PhaseAlreadyPaid,
+     #[msg("Nicht genug Tokens im Gift-Vault für Dev-Allocation.")]
+    InsufficientGiftVaultBalance,
+     #[msg("Admin-Token-Konto gehört nicht dem Admin.")]
+    InvalidTokenAccountOwner,
+     #[msg("Admin-Token-Konto hat falschen Mint.")]
+    InvalidTokenAccountMint,
+}
+
 // ========== DEX VESTING (release_dex.rs) ==========
 #[error_code]
 pub enum DexErrors {
@@ -38,49 +53,6 @@ pub enum DexErrors {
     NumericalOverflow,
 }
 
-#[error_code]
-pub enum VestingError {
-    // ========== INVESTOR ERRORS ==========
-    #[msg("Investor has already claimed all tokens")]
-    AlreadyFullyClaimed,
-    
-    #[msg("Cannot claim tokens before cliff period ends")]
-    CliffPeriodActive,
-    
-    #[msg("Calculated claim amount is zero")]
-    NothingToClaim,
-    
-    #[msg("Admin privileges have already been revoked")]
-    AdminAlreadyRevoked,
-    
-    // ========== DEX ERRORS ==========
-    #[msg("No more DEX tokens available to release")]
-    NoMoreDexTokens,
-    
-    #[msg("Cannot release DEX tokens more than once per month")]
-    ReleaseTooEarly,
-    
-    #[msg("DEX vesting account not initialized")]
-    DexVestingNotInitialized,
-    
-    // ========== MATH ERRORS ==========
-    #[msg("Arithmetic overflow occurred")]
-    ArithmeticOverflow,
-    
-    #[msg("Invalid amount provided")]
-    InvalidAmount,
-    
-    // ========== ACCOUNT ERRORS ==========
-    #[msg("Account is not initialized")]
-    AccountNotInitialized,
-    
-    #[msg("Account already initialized")]
-    AccountAlreadyInitialized,
-    
-    #[msg("PDA bump seed invalid")]
-    InvalidBump,
-}
-
 // ========== INVESTOREN-VERKAUF (register_investor.rs) ==========
 #[error_code]
 pub enum RegisterInvestorErrors {
@@ -97,9 +69,9 @@ pub enum RegisterInvestorErrors {
 // ========== STARTER-TOKENS (claim_starter.rs) ==========
 #[error_code]
 pub enum StarterErrors {
-    #[msg("Nicht genug Tokens im Gift-Vault für Starter.")]
+    #[msg("Nicht genug Tokens im Gift-Vault für 7 Starter Tokens.")]
     InsufficientGiftVaultBalance,
-    #[msg("User hat bereits Starter-Tokens erhalten.")]
+    #[msg("User hat bereits 7 Starter-Tokens erhalten.")]
     AlreadyClaimed,
     #[msg("User-Token-Konto gehört nicht dem User.")]
     InvalidUserTokenOwner,
