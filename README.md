@@ -1,7 +1,6 @@
 # 🐱 MOODYCATS – Smart Contracts
 
 > **moodycats.com** | **moodycats.io**  
-> *Ein lebendiges Token-Ökosystem mit mathematischem Kern*
 
 ## 📖 Whitepaper
 [Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
@@ -9,7 +8,7 @@
 ---
 
 ## 🎯 Überblick
-Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana, das:
+Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 - 🔐 **Sichere Token-Verteilung** (Vesting, OTC-Verkauf)
 - 💡 **Nutzungsbasierte App-Integration** (1 Token = 1 API-Call)
 - 🏦 **Langfristiges Treasury** (5-Jahres-Vesting für alle User)
@@ -58,7 +57,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana, das:
 ### Kernfunktionen
 | Funktion | Beschreibung | Sicherheit |
 |----------|--------------|------------|
-| `initialize()` |  |  |
+| `initialize()` |  | voll automatisiert |
 | `()` |  |  |
 
 ---
@@ -71,7 +70,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana, das:
 ### Kernfunktionen
 | Funktion | Beschreibung | Sicherheit |
 |----------|--------------|------------|
-| `initialize()` |  |  |
+| `initialize()` |  | voll automatisiert |
 | `()` |  |  |
 
 ---
