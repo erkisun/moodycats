@@ -1,6 +1,7 @@
 // -----------------------------------------------
 // moodycats.com / moodycats.io
 // programs/investor-dex-vesting/states/config.rs
+// Contract 1
 //
 // -----------------------------------------------
 use anchor_lang::prelude::*;

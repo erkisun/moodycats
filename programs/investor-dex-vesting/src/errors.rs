@@ -1,3 +1,9 @@
+// -----------------------------------------------
+// moodycats.com / moodycats.io
+// programs/investor-dex-vesting/errors.rs
+// Contract 1
+//
+// -----------------------------------------------
 use anchor_lang::prelude::*;
 
 // ========== BASIS-FEHLER (für alle) ==========

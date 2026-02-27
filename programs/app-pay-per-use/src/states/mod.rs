@@ -1,7 +1,7 @@
 // -----------------------------------------------
 // moodycats.com / moodycats.io
-// programs/investor-dex-vesting/states/mod.rs
-// Contract 1
+// programs/app-pay-per-use/states/mod.rs
+// Contract 2
 //
 // -----------------------------------------------
 pub mod config;
