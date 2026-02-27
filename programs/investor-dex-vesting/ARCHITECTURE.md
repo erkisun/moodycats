@@ -1,3 +1,7 @@
+## 🏗️ ARCHITEKTUR-DIAGRAMM
+
+```mermaid
+
 graph TD
     %% Entrypoint
     Lib[lib.rs]
@@ -39,3 +43,5 @@ graph TD
     %% Styling (Optional)
     style Config fill:#f9f,stroke:#333,stroke-width:4px
     style Lib fill:#bbf,stroke:#333
+
+```
