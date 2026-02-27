@@ -19,7 +19,7 @@ graph TD
 
     %% State / On-Chain Struktur
     subgraph States [Ordner: states/]
-        Config[config.rs - On-Chain Storage (Accounts)]
+        Config[config.rs]
     end
 
     %% Verbindungen
