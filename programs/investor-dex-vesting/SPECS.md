@@ -4,10 +4,8 @@
 
 # 🚀 CONTRACT 1: investor-dex-vesting
 
-======================================================
-programs/investor-dex-vesting/SPECS.md
-INVARIANTEN FÜR CONTRACT 1 (müssen IMMER gelten)
-======================================================
+### programs/investor-dex-vesting/SPECS.md
+### INVARIANTEN FÜR CONTRACT 1 (müssen IMMER gelten)
 
 1. ADMIN
 I1: config.admin ≠ Pubkey::default() (bis revoke_admin)
