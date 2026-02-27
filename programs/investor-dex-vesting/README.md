@@ -2,27 +2,22 @@
 ### moodycats.com / moodycats.io
 ### Whitepaper : https://moodycats.io/faq/Whitepaper
 
-# 🚀 CONTRACT 1: investor-dex-vesting
+# 🏦 CONTRACT 1: INVESTOR-DEX-VESTING
 
-## 📋 ÜBERBLICK
-Dieser Contract verwaltet:
+**Teil des Moodycats-Ökosystems**  
+🔗 [Haupt-README](../../README.md) | 📊 [Tokenomics](../../README.md#-tokenomics) | 📖 [Spezifikationen](./SPECS.md)
 
-### 1. DEX PRE-LAUNCH (500 Mio)
-- **Initial LP:** 100 Mio Token + ~15 SOL (manuell durch Dev via Raydium UI)
-- **DEX-Vesting:** 400 Mio Token im Vault
-- **4 Tranchen à 100 Mio**, 30 Tage Abstand
-- Admin fügt jede Tranche + gesammelte SOL manuell ins LP hinzu
+## 📋 ÜBERSICHT
 
-### 2. WEBSEITE-INVESTOREN (500 Mio)
-- **Preis:** 0.001 $/Token (fester Preis, teurer als DEX)
-- **Zahlung:** Investoren zahlen SOL off-chain an Admin-Wallet
-- **Ausführung:** Nach ID-Scan + Zahlungseingang ruft Admin `register_investor()` auf
-- **Transfer:** Tokens sofort an Investor (kein Vesting)
+Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
+- **DEX-Liquidität** (400 Mio Tokens)
+- **Investoren-Verkauf** (500 Mio Tokens)  
+- **Gift-Vault** (500 Mio Tokens für Boni, Starter, Dev)
 
-### 3. GIFT VAULT (500 Mio) – NEU
-- **20% Bonus** für Investoren
-- **Starter-Tokens:** 7 Token pro Neuregistrierung
-- **Earlybird-Boni** für erste User
-- **Dev-Anteile** für Team
+| Aspekt | Details |
+|--------|---------|
+| **Programm-ID** | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` |
+| **Token-Mint** | Wird bei initialize gesetzt |
+| **Authority** | Config-PDA (Programm kontrolliert alle Vaults) |
 
-## 📦 VAULTS (alle PDAs mit Config als Authority)
+## 🏗️ ARCHITEKTUR
