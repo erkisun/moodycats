@@ -2,54 +2,184 @@
 ### moodycats.com / moodycats.io
 ### Whitepaper : https://moodycats.io/faq/Whitepaper
 
-# 🚀 CONTRACT 1: investor-dex-vesting
+# 🚀 CONTRACT 1: investor-dex-vesting - SPEZIFIKATIONEN
 
-### programs/investor-dex-vesting/SPECS.md
-### INVARIANTEN FÜR CONTRACT 1 (müssen IMMER gelten)
+Haupt-README: /README.md
+Contract-README: ./README.md
+Invarianten: ./INVARIANTS.md
 
-1. ADMIN
-I1: config.admin ≠ Pubkey::default() (bis revoke_admin)
+## 1. ZWECK
 
-2. VAULTS
-I2: config.dex_vault = PDA mit seeds=[b"dex_vault"]
-I3: config.investor_vault = PDA mit seeds=[b"investor_vault"]
-I4: config.gift_vault = PDA mit seeds=[b"gift_vault"]
-I5: Alle Vaults haben config als Authority
-I6: Alle Vaults haben denselben Mint (config.mint)
+Contract 1 verwaltet die erste Phase der Moodycats-Tokenomics:
 
-3. BUMPS
-I7: config.bump = Bump von config-PDA
-I8: config.dex_vault_bump = Bump von dex_vault
-I9: config.investor_vault_bump = Bump von investor_vault
-I10: config.gift_vault_bump = Bump von gift_vault
+- DEX-Liquidität (400 Mio Tokens) – für Raydium LP
+- Investoren-Verkauf (500 Mio Tokens) – OTC über Webseite
+- Gift-Vault (500 Mio Tokens) – für Boni, Starter-Tokens und Dev-Anteile
 
-4. DEX-VESTING
-I11: released_tranches ∈ {0,1,2,3,4}
-I12: ∑ transferierte DEX-Tokens = released_tranches × 100 Mio
-I13: last_release + 30d ≤ current_time (bei erfolgreichem release_dex)
-I14: released_tranches = 4 ⇒ dex_vault.amount = 0
+## 2. PROGRAMM-ID
 
-5. INVESTOREN-VERKAUF
-I15: investor_vault.amount + ∑ ausgezahlte Investoren = 500 Mio
-I16: Jeder Investor erhält: amount + (amount × 20%)
+A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy
 
-6. STARTER-TOKENS
-I17: Jeder User kann NUR EINMAL 7 Tokens erhalten
-I18: Für jeden User mit Starter-Tokens existiert StarterClaim-PDA
-I19: ∑ Starter-Tokens ≤ 500 Mio (gift_vault)
+## 3. KONTEN (PDAs)
 
-7. DEV-ALLOCATION
-I20: Phase 1,2,3 können NUR EINMAL ausgezahlt werden
-I21: ∑ (Phase1 + Phase2 + Phase3) = 50 Mio Tokens
-I22: dev_phaseX_paid = true ⇔ Phase X wurde ausgezahlt
+| Konto | Seeds | Zweck |
+|-------|-------|-------|
+| Config | [b"config"] | Globale Konfiguration |
+| DEX-Vault | [b"dex_vault"] | 400 Mio Tokens |
+| Investor-Vault | [b"investor_vault"] | 500 Mio Tokens |
+| Gift-Vault | [b"gift_vault"] | 500 Mio Tokens |
+| StarterClaim | [b"starter", user] | Replay-Schutz |
 
-8. GIFT-VAULT
-I23: gift_vault.amount + ∑ Auszahlungen = 500 Mio
-I24: Auszahlungen aus gift_vault nur für:
-     - Investoren-Bonus (register_investor)
-     - Starter-Tokens (claim_starter)
-     - Earlybird-Boni (earlybird_bonus)
-     - Dev-Anteile (dev_allocation)
+## 4. INSTRUKTIONEN
 
-9. ZEIT
-I25: last_release ≤ current_time (immer)
+### 4.1 initialize()
+
+Einmalige Initialisierung nach Deploy.
+
+Erstellt:
+- Config-PDA
+- DEX-Vault
+- Investor-Vault
+- Gift-Vault
+
+Aktionen:
+- Alle Adressen in Config speichern
+- Alle Bumps in Config speichern
+- released_tranches = 0
+- last_release = jetzt
+
+### 4.2 release_dex()
+
+DEX-Tranchen freigeben.
+
+Aufrufer: Admin
+Maximal: 4x
+Abstand: 30 Tage
+Betrag: 100 Mio Tokens pro Tranche
+
+Prüfungen:
+- admin == config.admin
+- released_tranches < 4
+- last_release + 30d <= jetzt
+- dex_vault.amount >= 100 Mio
+
+Aktionen:
+- Transfer 100 Mio von dex_vault an admin_token_account
+- released_tranches += 1
+- last_release = jetzt
+
+### 4.3 register_investor(amount)
+
+Investoren-Kauf mit 20% Bonus.
+
+Aufrufer: Admin (nach off-chain SOL-Zahlung)
+
+Prüfungen:
+- admin == config.admin
+- investor_vault.amount >= amount
+- gift_vault.amount >= bonus (amount * 20%)
+- investor_token_account.owner == investor
+- investor_token_account.mint == config.mint
+
+Aktionen:
+- bonus = amount * 20 / 100
+- Transfer amount von investor_vault an investor_token_account
+- Transfer bonus von gift_vault an investor_token_account
+
+### 4.4 claim_starter()
+
+Starter-Tokens (7 pro User, einmalig).
+
+Aufrufer: Admin (Batch-Script)
+
+Prüfungen:
+- admin == config.admin
+- gift_vault.amount >= 7 Tokens
+- StarterClaim-PDA existiert noch nicht
+- user_token_account.owner == user
+- user_token_account.mint == config.mint
+
+Aktionen:
+- Transfer 7 Tokens von gift_vault an user_token_account
+- StarterClaim-PDA erstellen (user, claimed_at, bump)
+
+### 4.5 earlybird_bonus(amount)
+
+Flexible Earlybird-Boni.
+
+Aufrufer: Admin
+
+Prüfungen:
+- admin == config.admin
+- gift_vault.amount >= amount
+- amount > 0
+- user_token_account.owner == user
+- user_token_account.mint == config.mint
+
+Aktionen:
+- Transfer amount von gift_vault an user_token_account
+
+### 4.6 dev_allocation(phase)
+
+Dev-Anteile in 3 Phasen.
+
+Phasen:
+- Phase 1: 20 Mio Tokens (nach Contract 1)
+- Phase 2: 15 Mio Tokens (nach Contract 2 live)
+- Phase 3: 15 Mio Tokens (bei Contract 3 Start)
+
+Prüfungen:
+- admin == config.admin
+- phase in {1,2,3}
+- dev_phaseX_paid == false (für jeweilige Phase)
+- gift_vault.amount >= phasen_betrag
+- admin_token_account.owner == admin
+- admin_token_account.mint == config.mint
+
+Aktionen:
+- Transfer phasen_betrag von gift_vault an admin_token_account
+- dev_phaseX_paid = true setzen
+
+### 4.7 revoke_admin() (später)
+
+Admin entziehen.
+
+Aktionen:
+- config.admin = Null-Adresse
+- Contract wird herrenlos
+
+## 5. CONFIG-FELDER
+
+| Feld | Typ | Zweck |
+|------|-----|-------|
+| admin | Pubkey | Admin (Dev) |
+| mint | Pubkey | Token-Mint |
+| dex_vault | Pubkey | DEX-Vault Adresse |
+| investor_vault | Pubkey | Investor-Vault Adresse |
+| gift_vault | Pubkey | Gift-Vault Adresse |
+| released_tranches | u8 | 0..4 |
+| last_release | i64 | Timestamp |
+| dev_phase1_paid | bool | Flag |
+| dev_phase2_paid | bool | Flag |
+| dev_phase3_paid | bool | Flag |
+| bump | u8 | Config-Bump |
+| dex_vault_bump | u8 | DEX-Vault-Bump |
+| investor_vault_bump | u8 | Investor-Vault-Bump |
+| gift_vault_bump | u8 | Gift-Vault-Bump |
+
+## 6. KONSTANTEN
+
+| Konstante | Wert | Zweck |
+|-----------|------|-------|
+| TRANCHE_AMOUNT | 100.000.000 * 10^9 | 100 Mio Tokens |
+| MIN_DAYS_BETWEEN_RELEASES | 30 * 86400 | 30 Tage in Sekunden |
+| BONUS_PERCENT | 20 | 20% Bonus |
+| STARTER_AMOUNT | 7 * 10^9 | 7 Tokens |
+| DEV_PHASE_1 | 20.000.000 * 10^9 | 20 Mio Tokens |
+| DEV_PHASE_2 | 15.000.000 * 10^9 | 15 Mio Tokens |
+| DEV_PHASE_3 | 15.000.000 * 10^9 | 15 Mio Tokens |
+
+## 7. ABHÄNGIGKEITEN
+
+- Gleicher Token-Mint wie Contract 2 und Contract 3
+- Phase 2/3 der Dev-Allocation erfordern Contract 2/3
