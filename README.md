@@ -18,7 +18,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana, das:
 
 ---
 
-## 📊 TOKENOMICS (Final)
+## 📊 TOKENOMICS
 **Total Supply:** `5.000.000.000` (5 Milliarden) Token mit 9 Decimals
 
 | # | Kategorie | Tokens | % | Contract |
@@ -55,12 +55,24 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana, das:
 **Launch:** November 2026  
 **[👉 Detaillierte Beschreibung →](/programs/app-pay-per-use/README.md)**
 
+### Kernfunktionen
+| Funktion | Beschreibung | Sicherheit |
+|----------|--------------|------------|
+| `initialize()` |  |  |
+| `()` |  |  |
+
 ---
 
 ## 📦 CONTRACT 3: `treasury-vesting`
 **Zuständigkeit:** 5-Jahres-Vesting für alle User  
 **Tokens:** 2.500 Mio (50% vom Supply)  
 **[👉 Detaillierte Beschreibung →](/programs/treasury-vesting/README.md)**
+
+### Kernfunktionen
+| Funktion | Beschreibung | Sicherheit |
+|----------|--------------|------------|
+| `initialize()` |  |  |
+| `()` |  |  |
 
 ---
 
