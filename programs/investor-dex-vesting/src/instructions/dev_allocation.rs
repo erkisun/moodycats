@@ -32,6 +32,7 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Token, TokenAccount, Transfer};
 use crate::states::config::Config;
 use crate::errors::{BaseErrors, DevErrors};
+use crate::events::DevAllocationExecuted;
 
 // Phasen-Definition: (Phasennummer, Betrag in Tokens mit 9 Decimals)
 pub const DEV_PHASE_1: u64 = 20_000_000 * 1_000_000_000;  // Phase 1: 20 Mio Tokens
@@ -78,34 +79,40 @@ pub fn handler(ctx: Context<DevAllocation>, phase: u8) -> Result<()> {
     // 1. BETRAG BASIEREND AUF PHASE BESTIMMEN
     // ======================================================
     
-    let amount = match phase {
-        1 => DEV_PHASE_1,
-        2 => DEV_PHASE_2,
-        3 => DEV_PHASE_3,
-        _ => return Err(DevErrors::InvalidPhase.into()),
-    };
+    let config = &ctx.accounts.config;
+    if config.dev_phase1_paid && config.dev_phase2_paid && config.dev_phase3_paid {
+        return Err(DevErrors::AllPhasesPaid.into());
+    }
 
     // ======================================================
     // 2. PRÜFEN OB DIESE PHASE BEREITS AUSGEZAHLT WURDE
     // ======================================================
     
-    match phase {
-        1 => {
-            if ctx.accounts.config.dev_phase1_paid {
-                return Err(DevErrors::PhaseAlreadyPaid.into());
-            }
+    let (amount, paid_flag, required_flag, required_error) = match phase {
+    1 => (DEV_PHASE_1, 
+          ctx.accounts.config.dev_phase1_paid, 
+          true, 
+          None),
+    2 => (DEV_PHASE_2, 
+          ctx.accounts.config.dev_phase2_paid, 
+          ctx.accounts.config.dev_phase1_paid, 
+          Some(DevErrors::Phase1Required)),
+    3 => (DEV_PHASE_3, 
+          ctx.accounts.config.dev_phase3_paid, 
+          ctx.accounts.config.dev_phase2_paid, 
+          Some(DevErrors::Phase2Required)),
+    _ => return Err(DevErrors::InvalidPhase.into()),
+    };
+
+    // Prüfen
+    if paid_flag {
+        return Err(DevErrors::PhaseAlreadyPaid.into());
+    }
+
+    if !required_flag {
+        if let Some(error) = required_error {
+            return Err(error.into());
         }
-        2 => {
-            if ctx.accounts.config.dev_phase2_paid {
-                return Err(DevErrors::PhaseAlreadyPaid.into());
-            }
-        }
-        3 => {
-            if ctx.accounts.config.dev_phase3_paid {
-                return Err(DevErrors::PhaseAlreadyPaid.into());
-            }
-        }
-        _ => unreachable!(),
     }
 
     // ======================================================
@@ -128,6 +135,16 @@ pub fn handler(ctx: Context<DevAllocation>, phase: u8) -> Result<()> {
     // ======================================================
     // 5. TRANSFER: Phasen-Betrag an Admin
     // ======================================================
+
+    // Prüfen ob Transfer überhaupt möglich (vor CPI)
+    if ctx.accounts.gift_vault.amount < amount {
+        return Err(DevErrors::InsufficientGiftVaultBalance.into());
+    }
+
+    // Zusätzlich: Prüfen ob Gift-Vault die richtige Authority hat
+    if ctx.accounts.gift_vault.owner != ctx.accounts.config.key() {
+        return Err(DevErrors::InvalidGiftVaultAuthority.into());
+    }
     
     token::transfer(
         CpiContext::new_with_signer(
@@ -156,12 +173,29 @@ pub fn handler(ctx: Context<DevAllocation>, phase: u8) -> Result<()> {
     }
 
     // ======================================================
-    // 7. LOGGING
+    // 7. EVENT EMITTEN (NEU!)
+    // ======================================================
+
+    emit!(DevAllocationExecuted {
+        phase,
+        amount,
+        admin: ctx.accounts.admin.key(),
+        remaining_vault: ctx.accounts.gift_vault.amount - amount,
+        phase1_paid: config.dev_phase1_paid,  // <-- Jetzt true (falls Phase 1)
+        phase2_paid: config.dev_phase2_paid,  // <-- Jetzt true (falls Phase 2)
+        phase3_paid: config.dev_phase3_paid,  // <-- Jetzt true (falls Phase 3)
+        timestamp: Clock::get()?.unix_timestamp,
+    });
+
+    // ======================================================
+    // 8. LOGGING
     // ======================================================
     
     msg!("=== DEV-ALLOCATION PHASE {} AUSGEZAHLT ===", phase);
     msg!("Admin: {}", ctx.accounts.admin.key());
-    msg!("Phase: {} ({} Tokens)", phase, amount);
+    msg!("DevAllocation - Phase: {}, Amount: {}", phase, amount);
+    msg!("Admin: {}, Vault: {}", ctx.accounts.admin.key(), ctx.accounts.gift_vault.amount);
+    msg!("Amount:{},", amount);
     msg!("Aus Gift-Vault: {}", ctx.accounts.gift_vault.key());
     msg!("An Admin-Token-Konto: {}", ctx.accounts.admin_token_account.key());
     

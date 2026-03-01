@@ -83,13 +83,15 @@ pub struct ReleaseDex<'info> {
     pub dex_vault: Account<'info, TokenAccount>,
 
     // Admin Token-Account (hält die Moodycats-Tokens)
+
     #[account(
         mut,
-        constraint = admin_token_account.owner == admin.key(),
-        constraint = admin_token_account.mint == config.mint,
+        constraint = admin_token_account.owner == admin.key() @ DexErrors::InvalidTokenAccountOwner,
+        constraint = admin_token_account.mint == config.mint @ DexErrors::InvalidTokenMint,
+        constraint = !admin_token_account.close_authority.is_some() @ DexErrors::TokenAccountClosingProhibited,
     )]
     pub admin_token_account: Account<'info, TokenAccount>,
-        
+
     // Das Standard-SPL-Token-Program von Solana.
     // Wird für die Initialisierung der Token-Vaults benötigt.
     pub token_program: Program<'info, Token>,
@@ -193,6 +195,16 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
         ),
         TRANCHE_AMOUNT,
     )?;
+    
+    // Nach dem Transfer:
+    if config.released_tranches == 3 { // Das war die 4. Tranche (0-indexed)
+        require!(
+            dex_vault.amount == 0,
+            DexErrors::VaultShouldBeEmptyAfterFinalTranche
+        );
+        msg!("=== ALLE 4 DEX-TRANCHEN FREIGEGEBEN ===");
+        msg!("DEX-Vault ist jetzt leer. Bereit für admin_revoke?");
+    }
 
     // ======================================================
     // 3. CONFIG AKTUALISIEREN
@@ -204,7 +216,7 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
     config.released_tranches = config
         .released_tranches
         .checked_add(1)
-        .ok_or(DexErrors::NumericalOverflow)?;
+        .ok_or(DexErrors::TrancheCounterOverflow)?;
 
     // 3.2 Zeitstempel der letzten Freigabe aktualisieren
     //     Wichtig für die 30-Tage-Wartezeit bei der nächsten Freigabe
@@ -220,7 +232,10 @@ pub fn handler(ctx: Context<ReleaseDex>) -> Result<()> {
     msg!("Von DEX-Vault: {}", config.dex_vault);
     msg!("An Admin-Token-Konto: {}", admin_token_account.key());
     msg!("Zeitpunkt: {}", clock.unix_timestamp);
-    msg!("Nächste Freigabe möglich ab: {}", min_next_release + MIN_DAYS_BETWEEN_RELEASES);
+    let next_release_possible = clock.unix_timestamp
+        .checked_add(MIN_DAYS_BETWEEN_RELEASES)
+        .ok_or(DexErrors::NumericalOverflow)?;
+    msg!("Nächste Freigabe möglich ab: {}", next_release_possible);
     msg!("Verbleibende Tranchen: {}", 4 - config.released_tranches);
     msg!("=== TRANSAKTION ERFOLGREICH ===");
 

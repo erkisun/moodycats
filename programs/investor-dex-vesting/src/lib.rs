@@ -73,6 +73,7 @@ use anchor_lang::prelude::*;
 pub mod instructions;
 pub mod states;
 pub mod errors;
+pub mod events;
 
 use instructions::initialize::*;
 use instructions::release_dex::*;

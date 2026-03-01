@@ -167,6 +167,7 @@ pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     // ======================================================
     // 4. STARTER-CLAIM SPEICHERN (Replay-Schutz)
     // ======================================================
+    let claim_key = ctx.accounts.starter_claim.key();   // Vorher speichern ansonsten
     let claim = &mut ctx.accounts.starter_claim;
     claim.user = ctx.accounts.user.key();
     claim.claimed_at = Clock::get()?.unix_timestamp;
@@ -181,8 +182,8 @@ pub fn handler(ctx: Context<ClaimStarter>) -> Result<()> {
     msg!("Betrag: 7 Tokens ({})", STARTER_AMOUNT);
     msg!("Aus Gift-Vault: {}", ctx.accounts.gift_vault.key());
     msg!("An Token-Konto: {}", ctx.accounts.user_token_account.key());
-    msg!("Claim-PDA: {}", claim.key());         // kein immutable borrow !!
-    msg!("Zeitpunkt: {}", claim.claimed_at);    // kein immutable borrow !!
+    msg!("Claim-PDA: {}", claim_key);           
+    msg!("Zeitpunkt: {}", claim.claimed_at);  
     msg!("Verbleibend im Gift-Vault: {}", ctx.accounts.gift_vault.amount - STARTER_AMOUNT);
     msg!("=== TRANSAKTION ERFOLGREICH ===");
 

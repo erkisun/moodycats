@@ -30,12 +30,20 @@ pub enum DevErrors {
     InvalidPhase,
      #[msg("Diese Phase wurde bereits ausgezahlt.")]
     PhaseAlreadyPaid,
+     #[msg("Ungültige Gift-Vault Authority für Dev-Allocation.")]
+    InvalidGiftVaultAuthority,
      #[msg("Nicht genug Tokens im Gift-Vault für Dev-Allocation.")]
     InsufficientGiftVaultBalance,
      #[msg("Admin-Token-Konto gehört nicht dem Admin.")]
     InvalidTokenAccountOwner,
      #[msg("Admin-Token-Konto hat falschen Mint.")]
     InvalidTokenAccountMint,
+    #[msg("Phase 1 muss zuerst ausgezahlt werden")]
+    Phase1Required,
+    #[msg("Phase 2 muss zuerst ausgezahlt werden")]
+    Phase2Required,
+    #[msg("Alle Phasen sind bereits ausgezahlt worden")]
+    AllPhasesPaid,
 }
 
 // ========== DEX VESTING (release_dex.rs) ==========
@@ -49,7 +57,7 @@ pub enum DexErrors {
     InsufficientVaultBalance,
     #[msg("Der DEX-Vault stimmt nicht mit der Config.")]
     InvalidVault,
-    #[msg("Das Admin-Token-Konto gehört nicht dem Admin.")]
+    #[msg("Das Token-Konto gehört nicht dem Admin.")]
     InvalidTokenAccountOwner,
     #[msg("Das Admin-Token-Konto hat den falschen Mint.")]
     InvalidTokenAccountMint,
@@ -57,6 +65,14 @@ pub enum DexErrors {
     Unauthorized,
     #[msg("Numerischer Überlauf.")]
     NumericalOverflow,
+    #[msg("Das Token-Konto hat den falschen Mint")]
+    InvalidTokenMint,
+    #[msg("Token-Konto darf keine Close-Authority haben")]
+    TokenAccountClosingProhibited,
+    #[msg("Der DEX-Vault sollte nach der letzten Tranche leer sein")]
+    VaultShouldBeEmptyAfterFinalTranche,
+    #[msg("Tranchen Phase stimmt nicht (overflow)")]
+    TrancheCounterOverflow,
 }
 
 // ========== INVESTOREN-VERKAUF (register_investor.rs) ==========
