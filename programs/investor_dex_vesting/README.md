@@ -2,7 +2,7 @@
 ### moodycats.com / moodycats.io
 ### Whitepaper : https://moodycats.io/faq/Whitepaper
 
-# 🏦 CONTRACT 1: INVESTOR-DEX-VESTING
+# 🏦 CONTRACT 1: investor-dex-vesting
 
 **Teil des Moodycats-Ökosystems**  
 🔗 [Haupt-README](../../README.md) | 📊 [Tokenomics](../../README.md#-tokenomics) | 📖 [Spezifikationen](./SPECS.md)
