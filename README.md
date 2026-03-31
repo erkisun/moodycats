@@ -1,6 +1,9 @@
-# 🐱 MOODYCATS – Smart Contracts
+# 🏙️ MoodyCats | **moodycats.com** | **moodycats.io**  
 
-> **moodycats.com** | **moodycats.io**  
+
+![MoodyCats Banner](./moodycats.png)
+
+---
 
 ## 📖 Whitepaper
 [Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
@@ -13,7 +16,9 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 - 💡 **Nutzungsbasierte App-Integration** (1 Token = 1 API-Call)
 - 🏦 **Langfristiges Treasury** (5-Jahres-Vesting für alle User)
 
-**Alle Contracts nutzen den GLEICHEN Token Mint!**
+✅ **Alle drei Contracts nutzen den GLEICHEN Token Mint**  
+✅ **Jeder Contract hat seine eigene README.md mit Details**  
+✅ **On-Chain-Daten sind vollständig verifizierbar**
 
 ---
 
@@ -44,7 +49,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 | `claim_starter()` | 7 Starter-Tokens pro User (einmalig) | PDA-Replay-Schutz |
 | `earlybird_bonus()` | Flexible Boni für erste User | Manuell |
 | `dev_allocation()` | 50 Mio Dev-Anteile (3 Phasen) | Flags |
-| `revoke_admin()` | Admin entziehen (nach Abschluss) | 🔐 Final |
+| `revoke_admin()` | Admin entziehen (nach Abschluss) | ✅ Final |
 
 ---
 
@@ -75,13 +80,6 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 
 ---
 
-## 🔗 WICHTIG
-✅ **Alle drei Contracts nutzen den GLEICHEN Token Mint**  
-✅ **Jeder Contract hat seine eigene README.md mit Details**  
-✅ **On-Chain-Daten sind vollständig verifizierbar**
-
----
-
 ## 🛡️ Sicherheitsphilosophie
 - **Manuelle Schritte** wo Automatisierung Risiken birgt (Web-Hacks)
 - **Mehrstufige Prüfungen** in jeder Instruktion
@@ -93,9 +91,9 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 ## 🚀 Deployment (vorläufig)
 | Contract | Programm-ID | Status |
 |----------|-------------|--------|
-| investor-dex-vesting | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` | ✅ Aktiv |
+| investor-dex-vesting | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` | ✅ Testnet |
 | app-pay-per-use | `...` | ⏳ (Nov 2026) |
-| treasury-vesting | `...` | ⏳ |
+| treasury-vesting | `...` | ⏳ (Nov 2026) |
 
 ---
 
