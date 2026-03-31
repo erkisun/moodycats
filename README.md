@@ -28,8 +28,8 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 ## 📊 TOKENOMICS
 **Total Supply:** `5.000.000.000` (5 Milliarden) Token mit 9 Decimals
 
-| # | Kategorie | Tokens | % | Contract | www |
-|---|-----------|--------|---|----------|-----|
+| # | Kategorie | Tokens | % | Contract | Off-Chain |
+|---|-----------|--------|---|----------|-----------|
 | 1 | **DEX PRE-LAUNCH** | 500 Mio | 10% | [`investor-dex-vesting`](/programs/investor-dex-vesting) | https://moodycats.io |
 | 2 | **WEBSEITE-INVESTOREN** | 500 Mio | 10% | [`investor-dex-vesting`](/programs/investor-dex-vesting) | https://moodycats.io |
 | 3 | **GIFT VAULT** | 500 Mio | 10% | [`investor-dex-vesting`](/programs/investor-dex-vesting) | https://moodycats.io |
