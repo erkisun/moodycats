@@ -1,4 +1,4 @@
-# 🏙️ MoodyCats | **moodycats.com** | **moodycats.io**  
+# 🏙️ MoodyCats
 
 
 ![MoodyCats Banner](./moodycats.io.png)
@@ -6,6 +6,9 @@
 ---
 
 ## 📖 Whitepaper
+
+**moodycats.com** | **moodycats.io**  
+
 [Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
 
 ---
