@@ -60,7 +60,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 **Zuständigkeit:** App-Nutzung (1 Token = 1 API-Call)  
 **Tokens:** 1.000 Mio (20% vom Supply)  
 **Launch:** November 2026  
-**[👉 Detaillierte Beschreibung →](/programs/app-pay-per-use/README.md)**
+**[👉 Detaillierte Beschreibung →](/programs/app_pay_per_use/README.md)**
 
 ### Kernfunktionen
 | Funktion | Beschreibung | Sicherheit |
@@ -73,7 +73,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 ## 📦 CONTRACT 3: `treasury-vesting`
 **Zuständigkeit:** 5-Jahres-Vesting für alle User  
 **Tokens:** 2.500 Mio (50% vom Supply)  
-**[👉 Detaillierte Beschreibung →](/programs/treasury-vesting/README.md)**
+**[👉 Detaillierte Beschreibung →](/programs/treasury_vesting/README.md)**
 
 ### Kernfunktionen
 | Funktion | Beschreibung | Sicherheit |
