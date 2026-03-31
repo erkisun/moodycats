@@ -1,7 +1,7 @@
 # 🏙️ MoodyCats | **moodycats.com** | **moodycats.io**  
 
 
-![MoodyCats Banner](./moodycats.png)
+![MoodyCats Banner](./moodycats.io.png)
 
 ---
 
