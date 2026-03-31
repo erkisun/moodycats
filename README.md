@@ -48,7 +48,7 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 |----------|--------------|------------|
 | `initialize()` | Einmalige Initialisierung (Config + 3 Vaults) | Nur Admin |
 | `release_dex()` | 4×100 Mio DEX-Tranchen (30d Abstand) | Time-Lock |
-| `register_investor()` | OTC-Verkauf + 20% Bonus | Getrennte Vaults |
+| `register_investor()` | OTC-Verkauf + Bonus Tokens | Getrennte Vaults |
 | `claim_starter()` | 7 Starter-Tokens pro User (einmalig) | PDA-Replay-Schutz |
 | `earlybird_bonus()` | Flexible Boni für erste User | Manuell |
 | `dev_allocation()` | 50 Mio Dev-Anteile (3 Phasen) | Flags |
