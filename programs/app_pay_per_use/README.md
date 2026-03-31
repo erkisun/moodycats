@@ -1,5 +1,4 @@
-# MOODYCATS – SMART CONTRACTS
+# MOODYCATS – SMART CONTRACT 2
 ### moodycats.com / moodycats.io
-### Whitepaper : https://moodycats.io/faq/Whitepaper
 
-# 🏦 CONTRACT 1: app-pay-per-use
+# 🏦 CONTRACT 2: app-pay-per-use

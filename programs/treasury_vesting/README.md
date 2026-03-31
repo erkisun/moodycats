@@ -1,5 +1,4 @@
-# MOODYCATS – SMART CONTRACTS
+# MOODYCATS – SMART CONTRACT 3
 ### moodycats.com / moodycats.io
-### Whitepaper : https://moodycats.io/faq/Whitepaper
 
-# 🏦 CONTRACT 1: treasury-vesting
+# 🏦 CONTRACT 3: treasury-vesting
