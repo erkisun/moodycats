@@ -5,14 +5,6 @@
 
 ---
 
-## 📖 Whitepaper
-
-**moodycats.io**  
-
-[Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
-
----
-
 ## 🎯 Überblick
 Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 - 🔐 **Sichere Token-Verteilung** (Vesting, OTC-Verkauf)
@@ -97,6 +89,8 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 | investor-dex-vesting | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` | ✅ Testnet |
 | app-pay-per-use | `...` | ⏳ (Nov 2026) |
 | treasury-vesting | `...` | ⏳ (Nov 2026) |
+
+[Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
 
 ---
 
