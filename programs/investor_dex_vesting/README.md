@@ -64,7 +64,7 @@ raydium lp account (initial 100 mio)
 //    - Flexible Community-Geschenke
 //
 // 4. CONTRACT 2
-//    - App Launch : 500 Mio (10%), ab Nov 2026
+//    - App Launch : 1.000 Mio (20%), ab Nov 2026
 //    - 1 Token = 1 API-Call (app_per_pay_use)
 //
 // 5. CONTRACT 3
