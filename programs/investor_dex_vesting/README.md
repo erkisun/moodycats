@@ -21,11 +21,13 @@ SPL Token
 
 Token Mint
 
-mint disable
+mint authority disable
 
-freeze disable
+freeze authority disable
 
 meta data
+
+raydium lp account (initial 100 mio)
 
 ## 📊 TOKENOMICS
 
