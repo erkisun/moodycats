@@ -1,17 +1,15 @@
 // -----------------------------------------------
 // moodycats.com / moodycats.io
-// programs/investor-dex-vesting/lib.rs
 // Contract 1
 //
-// -----------------------------------------------
-// Whitepaper : https://moodycats.io/faq/Whitepaper
+// programs/investor-dex-vesting/lib.rs
 //
 // Contract 1 : anchor new investor-dex-vesting    ─┐
 // Contract 2 : anchor new app-per-pay-use         ─┼► Alle nutzen GLEICHEN Token Mint!
 // Contract 3 : anchor new treasury-vesting        ─┘
 //
 // -----------------------------------------------
-// MOODYCATS TOKENOMICS (FINAL)
+// MOODYCATS TOKENOMICS
 //
 // TOTAL SUPPLY: 5.000.000.000 Token (5 Mia)
 //
@@ -64,7 +62,7 @@
 // ❌ Keine Mint-/Freeze-Funktionen
 // ❌ Keine Upgradeability
 //
-// 🔥 Warum Automatisierung hier nicht sinnvoll ist (siehe ausführliche Begründung weiter unten)
+// 🔥 Aus Sicherheitsgründen ist aktuell hier eine Automatisierung nicht sinnvoll.
 // -----------------------------------------------
 
 use anchor_lang::prelude::*;
