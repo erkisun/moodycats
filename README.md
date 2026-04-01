@@ -23,10 +23,12 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 | # | Kategorie | Tokens | % | Contract | Off-Chain |
 |---|-----------|--------|---|----------|-----------|
 | 1 | **DEX PRE-LAUNCH** | 500 Mio | 10% | [`investor-dex-vesting`](./programs/investor_dex_vesting) | https://moodycats.io |
-| 2 | **INVESTOREN WEB** | 500 Mio | 10% | [`investor-dex-vesting`](./programs/investor_dex_vesting) | https://moodycats.io |
-| 3 | **GIFT VAULT** | 500 Mio | 10% | [`investor-dex-vesting`](./programs/investor_dex_vesting) | https://moodycats.io |
-| 4 | **APP LAUNCH** | 1.000 Mio | 20% | [`app-pay-per-use`](./programs/app_pay_per_use) | https://moodycats.com |
-| 5 | **TREASURY VESTING** | 2.500 Mio | 50% | [`treasury-vesting`](./programs/treasury_vesting) | https://moodycats.com |
+| 1 | **INVESTOREN WEB** | 500 Mio | 10% | [`investor-dex-vesting`](./programs/investor_dex_vesting) | https://moodycats.io |
+| 1 | **GIFT VAULT** | 500 Mio | 10% | [`investor-dex-vesting`](./programs/investor_dex_vesting) | https://moodycats.io |
+| 2 | **APP LAUNCH** | 1.000 Mio | 20% | [`app-pay-per-use`](./programs/app_pay_per_use) | https://moodycats.com |
+| 3 | **TREASURY VESTING** | 2.500 Mio | 50% | [`treasury-vesting`](./programs/treasury_vesting) | https://moodycats.com |
+
+[Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
 
 ---
 
@@ -89,8 +91,6 @@ Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 | investor-dex-vesting | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` | ✅ Testnet |
 | app-pay-per-use | `...` | ⏳ (Nov 2026) |
 | treasury-vesting | `...` | ⏳ (Nov 2026) |
-
-[Vollständiges Whitepaper](https://moodycats.io/faq/Whitepaper)
 
 ---
 
