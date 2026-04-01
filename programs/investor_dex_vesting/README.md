@@ -1,11 +1,6 @@
-# MOODYCATS – SMART CONTRACTS
-### moodycats.com / moodycats.io
-### Whitepaper : https://moodycats.io/faq/Whitepaper
+## MOODYCATS – SMART CONTRACT 1
 
-# 🏦 CONTRACT 1: investor-dex-vesting
-
-**Teil des Moodycats-Ökosystems**  
-🔗 [Haupt-README](../../README.md) | 📊 [Tokenomics](../../README.md#-tokenomics) | 📖 [Spezifikationen](./SPECS.md)
+🔗 investor_dex_vesting
 
 ## 📋 ÜBERSICHT
 
