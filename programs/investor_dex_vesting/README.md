@@ -6,7 +6,7 @@
 
 Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 - **DEX-Liquidität** (400 Mio Tokens)
-- **Investoren-Verkauf** (500 Mio Tokens)  
+- **Investoren-LP-Erhöhung** (500 Mio Tokens)  
 - **Gift-Vault** (500 Mio Tokens für Boni, Starter, Dev)
 
 | Aspekt | Details |
@@ -14,7 +14,7 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 | **Programm-ID** | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` |
 | **Token-Mint** | Wird bei initialize gesetzt |
 | **Authority** | Config-PDA (Programm kontrolliert alle Vaults) |
-
+                                                                        
 ## 🏗️ ARCHITEKTUR
 
 ```rust
