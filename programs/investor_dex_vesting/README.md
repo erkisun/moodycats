@@ -1,8 +1,8 @@
-## 🏙️ MMOODYCATS
+## 🏙️ MOODYCATS
 
 🔗  SMART CONTRACT 1 : investor_dex_vesting
 
-![MoodyCats Banner](./moodycats.io.png)
+![MoodyCats Banner](./../../moodycats.io.png)
 
 ---
 
@@ -18,6 +18,8 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 | **Programm-ID** | `A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy` |
 | **Token-Mint** | Wird bei initialize gesetzt |
 | **Authority** | Config-PDA (Programm kontrolliert alle Vaults) |
+
+---
                                                                         
 ## 🏗️ MANUAL PRE-DEPLOYMENT-SETUP
 
@@ -32,6 +34,8 @@ freeze authority disable
 meta data
 
 raydium lp account (initial 100 mio)
+
+---
 
 ## 📊 TOKENOMICS
 
