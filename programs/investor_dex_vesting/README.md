@@ -15,6 +15,18 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 | **Token-Mint** | Wird bei initialize gesetzt |
 | **Authority** | Config-PDA (Programm kontrolliert alle Vaults) |
                                                                         
+## 🏗️ MANUAL PRE-DEPLOYMENT-SETUP
+
+SPL Token
+
+Token Mint
+
+mint disable
+
+freeze disable
+
+meta data
+
 ## 🏗️ TOKENOMICS
 
 ```rust
