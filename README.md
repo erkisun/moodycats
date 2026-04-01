@@ -1,11 +1,11 @@
-# 🏙️ MoodyCats
-
+# 🏙️ MOODYCATS
 
 ![MoodyCats Banner](./moodycats.io.png)
 
 ---
 
-## 🎯 Überblick
+## 🎯 ÜBERSICHT
+
 Moodycats ist ein **dreiteiliges Smart-Contract-System** auf Solana Blockchain
 - 🔐 **Sichere Token-Verteilung** (Vesting, OTC-Verkauf)
 - 💡 **Nutzungsbasierte App-Integration** (1 Token = 1 API-Call)

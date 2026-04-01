@@ -1,6 +1,10 @@
-## MOODYCATS – SMART CONTRACT 1
+## 🏙️ MMOODYCATS
 
-🔗 investor_dex_vesting
+🔗  SMART CONTRACT 1 : investor_dex_vesting
+
+![MoodyCats Banner](./moodycats.io.png)
+
+---
 
 ## 📋 ÜBERSICHT
 
