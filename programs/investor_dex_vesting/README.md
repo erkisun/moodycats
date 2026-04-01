@@ -27,7 +27,7 @@ freeze disable
 
 meta data
 
-## 🏗️ TOKENOMICS
+## 📊 TOKENOMICS
 
 ```rust
 
