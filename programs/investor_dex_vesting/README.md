@@ -15,14 +15,13 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 | **Token-Mint** | Wird bei initialize gesetzt |
 | **Authority** | Config-PDA (Programm kontrolliert alle Vaults) |
                                                                         
-## 🏗️ ARCHITEKTUR
+## 🏗️ TOKENOMICS
 
 ```rust
 
 // -----------------------------------------------
 // MOODYCATS TOKENOMICS
-//
-// TOTAL SUPPLY: 5.000.000.000 Token (5 Mia)
+// TOTAL SUPPLY: 5.000.000.000 Token (5 Mia), 9 Decimals
 //
 // 1. DEX PRE-LAUNCH: 500 Mio (10%)
 //    - Initial LP auf Raydium: 100 Mio Token + ~15 SOL (manuell durch Dev)
