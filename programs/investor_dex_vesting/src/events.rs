@@ -1,19 +1,21 @@
 // -----------------------------------------------
 // moodycats.com / moodycats.io
-// programs/investor-dex-vesting/errors.rs
 // Contract 1
 //
+// programs/investor_dex_vesting/events.rs
+//
+// Contract 1 : anchor new investor_dex_vesting    ─┐
+// Contract 2 : anchor new app_per_pay_use         ─┼► Alle nutzen GLEICHEN Token Mint!
+// Contract 3 : anchor new treasury_vesting        ─┘
+//
+// -----------------------------------------------
+// CONTRACT 1: EVENTS
+// -----------------------------------------------
+//
+// 1. DevAllocation (1% Team-Anteil)
+// 2. AdminRevoke
 // -----------------------------------------------
 use anchor_lang::prelude::*;
-
-// -----------------------------------------------
-// INVESTOR DEX VESTING - EVENTS
-// moodycats.com / moodycats.io
-//
-// Nur die Events, die aktuell gebraucht werden:
-// - DevAllocation (1% Team-Anteil)
-// - AdminRevoke (für später)
-// -----------------------------------------------
 
 // Event: Dev-Auszahlung wurde durchgeführt
 // Emitted von: dev_allocation.rs
@@ -29,7 +31,7 @@ pub struct DevAllocationExecuted {
     pub timestamp: i64,         // Zeitstempel
 }
 
-/// Event: Admin wurde entzogen (für später)
+/// Event: Admin wurde entzogen
 /// Emitted von: admin_revoke.rs
 #[event]
 pub struct AdminRevoked {

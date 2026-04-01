@@ -2,11 +2,11 @@
 // moodycats.com / moodycats.io
 // Contract 1
 //
-// programs/investor-dex-vesting/lib.rs
+// programs/investor_dex_vesting/lib.rs
 //
-// Contract 1 : anchor new investor-dex-vesting    ─┐
-// Contract 2 : anchor new app-per-pay-use         ─┼► Alle nutzen GLEICHEN Token Mint!
-// Contract 3 : anchor new treasury-vesting        ─┘
+// Contract 1 : anchor new investor_dex_vesting    ─┐
+// Contract 2 : anchor new app_per_pay_use         ─┼► Alle nutzen GLEICHEN Token Mint!
+// Contract 3 : anchor new treasury_vesting        ─┘
 //
 // -----------------------------------------------
 // CONTRACT 1: FUNKTIONSÜBERSICHT
@@ -35,7 +35,7 @@
 
 use anchor_lang::prelude::*;
 
-// Module deklarieren (werden später mit Inhalt gefüllt)
+// Module deklarieren
 pub mod instructions;
 pub mod states;
 pub mod errors;
@@ -48,7 +48,7 @@ use instructions::claim_starter::*;
 use instructions::earlybird_bonus::*;
 use instructions::dev_allocation::*;
 
-// Programm-ID aus declare_id! übernehmen
+// Programm-ID aus declare_id! übernehmen (Admin ID)
 declare_id!("A35GmMxidLvM6LaL8n17PCFU9zoQeEp5Zm5TtmRRwddy");
 
 #[program]

@@ -1,12 +1,19 @@
 // -----------------------------------------------
 // moodycats.com / moodycats.io
-// programs/investor-dex-vesting/errors.rs
 // Contract 1
 //
+// programs/investor_dex_vesting/errors.rs
+//
+// Contract 1 : anchor new investor_dex_vesting    ─┐
+// Contract 2 : anchor new app_per_pay_use         ─┼► Alle nutzen GLEICHEN Token Mint!
+// Contract 3 : anchor new treasury_vesting        ─┘
+//
+// -----------------------------------------------
+// CONTRACT 1: ERRORS
 // -----------------------------------------------
 use anchor_lang::prelude::*;
 
-// ========== BASIS-FEHLER (für alle) ==========
+// ========== BASIS-FEHLER (Initialize.rs) ==========
 #[error_code]
 pub enum BaseErrors {
     #[msg("Nur der Admin darf diese Aktion ausführen.")]
