@@ -10,7 +10,7 @@ use anchor_lang::prelude::*;
 // INVESTOR DEX VESTING - EVENTS
 // moodycats.com / moodycats.io
 //
-// Nur die Events, die wir aktuell brauchen:
+// Nur die Events, die aktuell gebraucht werden:
 // - DevAllocation (1% Team-Anteil)
 // - AdminRevoke (für später)
 // -----------------------------------------------
