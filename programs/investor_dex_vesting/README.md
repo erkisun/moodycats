@@ -56,5 +56,4 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 //    - 5 Jahre linear, 500 Mio pro Jahr an Nutzer
 //    - Ausschüttung aller restlichen Token an alle, falls Ziele unterschritten
 
-```rust
-
+```
