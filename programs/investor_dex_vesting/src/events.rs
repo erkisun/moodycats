@@ -33,12 +33,8 @@ pub struct DevAllocationExecuted {
 /// Emitted von: admin_revoke.rs
 #[event]
 pub struct AdminRevoked {
-    /// Alter Admin
-    pub old_admin: Pubkey,
     
-    /// Wer hat entzogen
-    pub revoked_by: Pubkey,
-    
-    /// Zeitstempel
-    pub timestamp: i64,
+    pub old_admin: Pubkey,      // Alter Admin
+    pub revoked_by: Pubkey,     // Wer hat entzogen
+    pub timestamp: i64,         // Zeitstempel
 }
