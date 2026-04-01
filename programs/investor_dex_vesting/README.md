@@ -42,12 +42,12 @@ Contract 1 verwaltet die **erste Phase** der Moodycats-Tokenomics:
 //    - Dev-Anteile (50 Mio, gestaffelt in 3 Phasen)
 //    - Flexible Community-Geschenke
 //
-// 4. APP LAUNCH: 500 Mio (10%)
-//    - Eigenständiger Contract 2, ab Nov 2026
-//    - 1 Token = 1 API-Call (app-per-pay-use)
+// 4. CONTRACT 2
+//    - App Launch : 500 Mio (10%), ab Nov 2026
+//    - 1 Token = 1 API-Call (app_per_pay_use)
 //
-// 5. TREASURY VESTING: 2.500 Mio (50%)
-//    - Eigenständiger Contract 3
+// 5. CONTRACT 3
+//    - Treasury Vesting : 2.500 Mio (50%)
 //    - 5 Jahre linear, 500 Mio pro Jahr an Nutzer
 //    - Ausschüttung aller restlichen Token an alle, falls Ziele unterschritten
 
